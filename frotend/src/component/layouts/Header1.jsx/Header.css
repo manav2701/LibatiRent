@@ -234,11 +234,6 @@
   transform: translateY(-2px) scale(1.05);
 }
 
-/* Glass Search Container - Remove conflicting styles */
-.search-container {
-  /* Remove this class since we're using Material-UI styles */
-}
-
 /* Ensure no conflicting input styles */
 .MuiInputBase-root {
   background: transparent !important;
