@@ -4,17 +4,16 @@ const userModel = require("../model/userModel");
 const sendJWtToken = require("../utils/JwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
-const cloudinary = require("cloudinary");
+// const cloudinary = require("cloudinary");
 
 
 // signUp controller>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 exports.registerUser = asyncWrapper(async (req, res) => {
-  const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+ /* const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
     folder: "Avatar", // this folder cloudainry data base manage by us
     width: 150,
     crop: "scale",
-  });
-
+  });*/
 
 
   const { name, email, password } = req.body;
@@ -23,8 +22,8 @@ exports.registerUser = asyncWrapper(async (req, res) => {
     password,
     email,
     avatar: {
-      public_id: myCloud.public_id,
-      url: myCloud.secure_url,
+    public_id: "default_avatar",
+      url: "https://via.placeholder.com/150x150/cccccc/000000?text=User",
     },
   });
 
@@ -173,7 +172,7 @@ exports.resetPassword = asyncWrapper(async (req, res, next) => {
 //// Get User Detail  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 exports.getUserDetails = asyncWrapper(async (req, res) => {
 
-  const user = await userModel.findById(req.user.id); // user.id because we set that user into as user.req when user gose autentiction. becauae all data of users set into req.user. only user when logged in then access this function
+  const user = await userModel.findById(req.user.id); // user.id because we set that user into as user.req when user gose autentition. becauae all data of users set into req.user. only user when logged in then access this function
   res.status(200).json({
     success: true,
     user, // profile details of user
@@ -208,7 +207,7 @@ exports.updateProfile = asyncWrapper(async (req, res, next) => {
   };
 
   // if avatar not empty then
-  if (req.body.avatar !== "") {
+  /*if (req.body.avatar !== "") {
     const user = await userModel.findById(req.user.id);
     const imageId = user.avatar.public_id;
 
@@ -225,7 +224,7 @@ exports.updateProfile = asyncWrapper(async (req, res, next) => {
       public_id: myCloud.public_id, // id for img
       url: myCloud.secure_url, // new User data
     };
-  }
+  }*/
 
   // set new value of user
   const user = await userModel.findByIdAndUpdate(req.user.id, newUserData, {
@@ -287,12 +286,8 @@ exports.deleteUser = asyncWrapper(async (req, res, next) => {
     );
   }
 
-  // delete iamge from cloud as well
-  const imageId = user.avatar.public_id;
-  await cloudinary.v2.uploader.destroy(imageId);
-
-  // if user founded the just remove from database
-  await user.remove();
+  // if user founded then remove from database
+  await userModel.findByIdAndDelete(req.params.id);
 
   res.status(200).json({
     success: true,

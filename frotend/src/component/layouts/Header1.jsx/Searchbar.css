@@ -1,22 +1,71 @@
-.search_from{
-    width: 70vw;
-    height: 25px;
-    padding: auto;
-}
-@media (max-width: 899px){
- .search_from{
-     width: 40vw;
- }  
+.search_from {
+  width: 70vw;
+  height: 25px;
+  padding: auto;
+  font-family: 'Inter', 'Poppins', sans-serif;
 }
 
-.closeIcon  {
-  color: #000000;
+@media (max-width: 899px) {
+  .search_from {
+    width: 40vw;
+  }
+}
+
+.closeIcon {
+  color: rgba(255, 255, 255, 0.7);
   font-size: 1.8rem;
-  transition: color 0.2s ease-in-out;
+  transition: all 0.3s ease;
 }
 
-/* Apply the hover effect on the CloseOutlined icon */
 .closeIcon:hover {
-  color: #e30605;
+  color: #3b82f6;
+  transform: scale(1.1);
+}
+
+/* Glass Search Bar Styling */
+.glass-search-container {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  padding: 12px 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.glass-search-container:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(59, 130, 246, 0.2);
+}
+
+.glass-search-container:focus-within {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+  transform: translateY(-2px);
+}
+
+.glass-search-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f8fafc;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  width: 100%;
+}
+
+.glass-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 400;
+}
+
+.glass-search-icon {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 20px;
+  transition: color 0.3s ease;
 }
 

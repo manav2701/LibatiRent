@@ -1,5 +1,6 @@
-import React, { useState, useEffect, Suspense } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// App.jsx
+import React, { useState, useEffect, Suspense, useCallback } from "react";
+import { BrowserRouter as Router, Route, Switch, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { load_UserProfile } from "./actions/userAction";
 import axios from "axios";
@@ -35,439 +36,188 @@ import ReturnPolicyPage from "./Terms&Condtions/Return";
 import TermsUse from "./Terms&Condtions/TermsAndUse";
 import TermsAndConditions from "./Terms&Condtions/TermsCondtion";
 import PrivacyPolicy from "./Terms&Condtions/Privacy";
-// const LazyPayment = React.lazy(() => import("./component/Cart/Payment"));
+import ApiTester from "./component/Debug/ApiTester";
+// import ProfileModal from "./component/layouts/Header1.jsx/ProfileModel"; // unused in your snippet
+
+// Lazy loading admin components
 const LazyDashboard = React.lazy(() => import("./component/Admin/Dashboard"));
-const LazyProductList = React.lazy(() =>
-  import("./component/Admin/ProductList")
-);
+const LazyProductList = React.lazy(() => import("./component/Admin/ProductList"));
 const LazyOrderList = React.lazy(() => import("./component/Admin/OrderList"));
 const LazyUserList = React.lazy(() => import("./component/Admin/UserList"));
-const LazyUpdateProduct = React.lazy(() =>
-  import("./component/Admin/UpdateProduct")
-);
-const LazyProcessOrder = React.lazy(() =>
-  import("./component/Admin/ProcessOrder")
-);
+const LazyUpdateProduct = React.lazy(() => import("./component/Admin/UpdateProduct"));
+const LazyProcessOrder = React.lazy(() => import("./component/Admin/ProcessOrder"));
 const LazyUpdateUser = React.lazy(() => import("./component/Admin/UpdateUser"));
 const LazyNewProduct = React.lazy(() => import("./component/Admin/NewProduct"));
-const LazyProductReviews = React.lazy(() =>
-  import("./component/Admin/ProductReviews")
-);
+const LazyProductReviews = React.lazy(() => import("./component/Admin/ProductReviews"));
 
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   const dispatch = useDispatch();
 
-  // get STRIPE_API_KEY for payment from backend for connection to stripe payment gateway
-  async function getStripeApiKey() {
+  // Get STRIPE_API_KEY for payment from backend
+  const getStripeApiKey = useCallback(async () => {
     try {
       const { data } = await axios.get("/api/v1/stripeapikey");
-      if (
-        data.stripeApiKey !== undefined &&
-        data.stripeApiKey !== null &&
-        data.stripeApiKey !== ""
-      ) {
-        sessionStorage.setItem(
-          "stripeApiKey",
-          JSON.stringify(data.stripeApiKey)
-        );
+      const key = data?.stripeApiKey ?? "";
+      if (key) {
+        sessionStorage.setItem("stripeApiKey", JSON.stringify(key));
+        setStripeApiKey(key);
+      } else {
+        setStripeApiKey("");
       }
-      setStripeApiKey(data.stripeApiKey);
     } catch (error) {
-      // Handle error if the API call fails
       console.error("Error fetching Stripe API key:", error);
+      setStripeApiKey("");
     }
+  }, []);
+
+  // Load user profile only if there's a token in localStorage
+  const loadUserProfile = useCallback(async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (token) {
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        await dispatch(load_UserProfile());
+      }
+    } catch (error) {
+      console.error("Error loading user profile:", error);
+      localStorage.removeItem("token");
+      delete axios.defaults.headers.common["Authorization"];
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    const initializeApp = async () => {
+      // Try to reuse Stripe key from session storage
+      const storedStripeKey = sessionStorage.getItem("stripeApiKey");
+      if (storedStripeKey) {
+        try {
+          setStripeApiKey(JSON.parse(storedStripeKey));
+        } catch (error) {
+          console.error("Error parsing stored Stripe key:", error);
+          sessionStorage.removeItem("stripeApiKey");
+        }
+      } else {
+        await getStripeApiKey();
+      }
+
+      // load user profile if token exists
+      await loadUserProfile();
+
+      // Done initializing
+      setIsLoading(false);
+    };
+
+    initializeApp();
+  }, [getStripeApiKey, loadUserProfile]);
+
+  // Set up axios interceptor for handling 401 errors
+  useEffect(() => {
+    const interceptor = axios.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response?.status === 401) {
+          localStorage.removeItem("token");
+          delete axios.defaults.headers.common["Authorization"];
+          console.log("Authentication expired. Please login again.");
+          // you can add a redirect here if you want
+        }
+        return Promise.reject(error);
+      }
+    );
+
+    return () => {
+      axios.interceptors.response.eject(interceptor);
+    };
+  }, []);
+
+  const AdminHeaderHider = ({ children }) => {
+    const location = useLocation();
+    const isAdminRoute = location.pathname.startsWith("/admin");
+    return (
+      <>
+        {!isAdminRoute && <Header />}
+        {children}
+      </>
+    );
+  };
+
+  if (isLoading) {
+    return <CricketBallLoader />;
   }
 
-  useEffect(() => {
-    const stripeApiKey = sessionStorage.getItem("stripeApiKey");
-    if (stripeApiKey) {
-      setStripeApiKey(stripeApiKey);
-    } else {
-      getStripeApiKey();
-    }
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    dispatch(load_UserProfile());
-
-    // eslint-disable-next-line
-  }, []);
+  const stripePromise = stripeApiKey ? loadStripe(stripeApiKey) : null;
 
   return (
-    <>
-      <Router>
-      <SpeedInsights/>
+    <Router>
+      <SpeedInsights />
+      <AdminHeaderHider>
         <Switch>
-       
+          <Route exact path="/" component={Home} />
+          <Route exact path="/product/:id" component={ProductDetails} />
+          <Route exact path="/products" component={Products} />
+          <Route path="/products/:keyword" component={Products} />
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/password/forgot" component={ForgetPassword} />
+          <Route exact path="/password/reset/:token" component={ResetPassword} />
+          <Route exact path="/cart" component={Cart} />
+          <Route exact path="/contact" component={ContactForm} />
+          <Route exact path="/about_us" component={AboutUsPage} />
+
+          {/* Policy routes */}
+          <Route exact path="/policy/return" component={ReturnPolicyPage} />
+          <Route exact path="/policy/Terms" component={TermsUse} />
+          <Route exact path="/policy/privacy" component={PrivacyPolicy} />
+          <Route exact path="/terms/conditions" component={TermsAndConditions} />
+
+          {/* Private routes (user) */}
+          <PrivateRoute exact path="/account" component={Profile} />
+          <PrivateRoute exact path="/profile/update" component={UpdateProfile} />
+          <PrivateRoute exact path="/password/update" component={UpdatePassword} />
+          <PrivateRoute exact path="/orders" component={MyOrder} />
+          <PrivateRoute exact path="/shipping" component={Shipping} />
+          <PrivateRoute exact path="/order/confirm" component={ConfirmOrder} />
+          <PrivateRoute exact path="/success" component={OrderSuccess} />
+
+          {/* Payment route: always render Payment UI, pass stripePromise as prop */}
           <Route
             exact
-            path="/"
-            render={() => (
-              <>
-                {<Header />}
-                <Home />
-                <Services />
-                {<Footer />}
-              </>
+            path="/process/payment"
+            render={props => (
+              stripePromise ? (
+                <Elements stripe={stripePromise}>
+                  <Payment {...props} />
+                </Elements>
+              ) : (
+                <Payment {...props} stripeUnavailable />
+              )
             )}
           />
 
-          <Route
-            exact
-            path="/product/:id"
-            render={() => (
-              <>
-                {<Header />}
-                <ProductDetails />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
+          {/* Admin routes (lazy loaded) */}
+          <Suspense fallback={<CricketBallLoader />}>
+            <PrivateRoute isAdmin={true} exact path="/admin/dashboard" component={LazyDashboard} />
+            <PrivateRoute isAdmin={true} exact path="/admin/products" component={LazyProductList} />
+            <PrivateRoute isAdmin={true} exact path="/admin/product/:id" component={LazyUpdateProduct} />
+            <PrivateRoute isAdmin={true} exact path="/admin/reviews" component={LazyProductReviews} />
+            <PrivateRoute isAdmin={true} exact path="/admin/orders" component={LazyOrderList} />
+            <PrivateRoute isAdmin={true} exact path="/admin/order/:id" component={LazyProcessOrder} />
+            <PrivateRoute isAdmin={true} exact path="/admin/new/product" component={LazyNewProduct} />
+            <PrivateRoute isAdmin={true} exact path="/admin/users" component={LazyUserList} />
+            <PrivateRoute isAdmin={true} exact path="/admin/user/:id" component={LazyUpdateUser} />
+          </Suspense>
 
-          <Route
-            exact
-            path="/products"
-            render={() => (
-              <>
-                {<Header />}
-                <Products />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
+          {/* Debug / API tester */}
+          <Route exact path="/api-test" component={ApiTester} />
 
-          <Route
-            path="/products/:keyword"
-            render={() => (
-              <>
-                {<Header />}
-                <Products />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
-
-          <Route
-            exact
-            path="/signup"
-            render={() => (
-              <>
-                {<Header />}
-                <Signup />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
-
-          <Route
-            exact
-            path="/login"
-            render={() => (
-              <>
-                {<Header />}
-                <Login />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
-
-          <Route
-            exact
-            path="/password/forgot"
-            render={() => (
-              <>
-                {<Header />}
-                <ForgetPassword />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
-
-          <Route
-            exact
-            path="/password/reset/:token"
-            render={() => (
-              <>
-                {<Header />}
-                <ResetPassword />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
-
-          <Route
-            exact
-            path="/cart"
-            render={() => (
-              <>
-                {<Header />}
-                <Cart />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
-
-          <Route
-            exact
-            path="/policy/return"
-            render={() => (
-              <>
-                {<Header />}
-                <ReturnPolicyPage />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
-
-          <Route
-            exact
-            path="/policy/Terms"
-            render={() => (
-              <>
-                {<Header />}
-                <TermsUse />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
-
-          <Route
-            exact
-            path="/policy/privacy"
-            render={() => (
-              <>
-                {<Header />}
-                <PrivacyPolicy />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
-
-          <Route
-            exact
-            path="/terms/conditions"
-            render={() => (
-              <>
-                {<Header />}
-                <TermsAndConditions />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
-
-          <Route
-            exact
-            path="/contact"
-            render={() => (
-              <>
-                {<Header />}
-                <ContactForm />
-
-                {<Footer />}
-              </>
-            )}
-          />
-
-          <Route
-            exact
-            path="/about_us"
-            render={() => (
-              <>
-                {<Header />}
-                <AboutUsPage />
-
-                {<Footer />}
-              </>
-            )}
-          />
-
-          <Route
-            exact
-            path="/account"
-            render={() => (
-              <>
-                {<Header />}
-                <PrivateRoute exact path="/account" component={Profile} />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
-
-          <Route
-            exact
-            path="/profile/update"
-            render={() => (
-              <>
-                {<Header />}
-                <PrivateRoute
-                  exact
-                  path="/profile/update"
-                  component={UpdateProfile}
-                />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
-
-          <Route
-            exact
-            path="/password/update"
-            render={() => (
-              <>
-                {<Header />}
-                <PrivateRoute
-                  exact
-                  path="/password/update"
-                  component={UpdatePassword}
-                />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
-
-          <Route
-            exact
-            path="/orders"
-            render={() => (
-              <>
-                {<Header />}
-                <PrivateRoute exact path="/orders" component={MyOrder} />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
-
-          <Route
-            exact
-            path="/shipping"
-            render={() => (
-              <>
-                {<Header />}
-                <PrivateRoute exact path="/shipping" component={Shipping} />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
-
-          <Route
-            exact
-            path="/order/confirm"
-            render={() => (
-              <>
-                {<Header />}
-                <PrivateRoute
-                  exact
-                  path="/order/confirm"
-                  component={ConfirmOrder}
-                />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
-
-          <Route
-            exact
-            path="/success"
-            render={() => (
-              <>
-                {<Header />}
-                <PrivateRoute exact path="/success" component={OrderSuccess} />
-                <Services />
-                {<Footer />}
-              </>
-            )}
-          />
+          {/* fallback route could go here (optional) */}
         </Switch>
-
-        {/* Admin routes */}
-        <Suspense fallback={<CricketBallLoader />}>
-          <Switch>
-            <PrivateRoute
-              isAdmin={true}
-              exact
-              path="/admin/dashboard"
-              component={LazyDashboard}
-            />
-            <PrivateRoute
-              isAdmin={true}
-              exact
-              path="/admin/products"
-              component={LazyProductList}
-            />
-            <PrivateRoute
-              isAdmin={true}
-              exact
-              path="/admin/product/:id"
-              component={LazyUpdateProduct}
-            />
-            <PrivateRoute
-              isAdmin={true}
-              exact
-              path="/admin/reviews"
-              component={LazyProductReviews}
-            />
-            <PrivateRoute
-              isAdmin={true}
-              exact
-              path="/admin/orders"
-              component={LazyOrderList}
-            />
-            <PrivateRoute
-              isAdmin={true}
-              exact
-              path="/admin/order/:id"
-              component={LazyProcessOrder}
-            />
-            <PrivateRoute
-              isAdmin={true}
-              exact
-              path="/admin/new/product"
-              component={LazyNewProduct}
-            />
-            <PrivateRoute
-              isAdmin={true}
-              exact
-              path="/admin/users"
-              component={LazyUserList}
-            />
-            <PrivateRoute
-              isAdmin={true}
-              exact
-              path="/admin/user/:id"
-              component={LazyUpdateUser}
-            />
-          </Switch>
-        </Suspense>
-
-        <Elements stripe={loadStripe(stripeApiKey)}>
-          <Route exact path="/process/payment">
-            {<Header />}
-            <PrivateRoute exact path="/process/payment" component={Payment} />
-          </Route>
-        </Elements>
-      </Router>
-    </>
+        <Footer />
+      </AdminHeaderHider>
+    </Router>
   );
 }
 

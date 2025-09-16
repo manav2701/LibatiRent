@@ -6,7 +6,9 @@ const ErrorHandler = require("../utils/errorHandler");
 //>>>>>>>>>>>>>>>  create a order    >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 exports.newOrder = asyncWrapper(async (req, res, next) => {
   const {
-    shippingInfo,
+    deliveryAddress,
+    pickupAddress,
+    rentalInfo,
     orderItems,
     paymentInfo,
     itemsPrice,
@@ -15,17 +17,64 @@ exports.newOrder = asyncWrapper(async (req, res, next) => {
     totalPrice,
   } = req.body;
 
+  // Validate rental dates
+  if (
+    !rentalInfo ||
+    !rentalInfo.deliveryDate ||
+    !rentalInfo.deliveryTime ||
+    !rentalInfo.pickupDate ||
+    !rentalInfo.pickupTime
+  ) {
+    return next(new ErrorHandler("Rental delivery and pickup date/time required", 400));
+  }
+
+  // Validate addresses (now using countryCode)
+  if (
+    !deliveryAddress ||
+    !pickupAddress ||
+    !deliveryAddress.address ||
+    !pickupAddress.address ||
+    !deliveryAddress.countryCode ||
+    !pickupAddress.countryCode
+  ) {
+    return next(new ErrorHandler("Both delivery and pickup addresses and country codes are required", 400));
+  }
+
+  // Check if any products in the order are available for the rental period
+  for (const item of orderItems) {
+    const product = await productModel.findById(item.productId);
+    if (!product) {
+      return next(new ErrorHandler(`Product ${item.name} not found`, 404));
+    }
+    
+    // Check availability window
+    if (product.availability) {
+      const availableFrom = product.availability.availableFrom?.date;
+      const availableTo = product.availability.availableTo?.date;
+      
+      if (availableFrom && rentalInfo.pickupDate < availableFrom) {
+        return next(new ErrorHandler(`Product ${item.name} is not available from the selected pickup date`, 400));
+      }
+      
+      if (availableTo && rentalInfo.returnDate > availableTo) {
+        return next(new ErrorHandler(`Product ${item.name} is not available until the selected return date`, 400));
+      }
+    }
+  }
+
   // create order :
-  const order = await orderModel.create({  
-    shippingInfo,
+  const order = await orderModel.create({
+    deliveryAddress,
+    pickupAddress,
+    rentalInfo,
     orderItems,
     paymentInfo,
     itemsPrice,
     taxPrice,
     shippingPrice,
     totalPrice,
-    user: req.user._id, // from authenticated user
-    paidtAt: Date.now(),
+    user: req.user._id,
+    paidAt: Date.now(),
   });
 
   res.status(201).json({
@@ -132,6 +181,24 @@ async function updateStock(id, quantity) {
   }
 }
 
+// Add a helper function to check existing rentals for a product
+async function checkExistingRentals(productId, pickupDate, returnDate) {
+  try {
+    // Find orders that overlap with the requested rental period
+    const overlappingOrders = await orderModel.find({
+      "orderItems.productId": productId,
+      "rentalInfo.pickupDate": { $lte: returnDate },
+      "rentalInfo.returnDate": { $gte: pickupDate },
+      orderStatus: { $nin: ["Cancelled", "Delivered"] } // Exclude cancelled and delivered orders
+    });
+    
+    return overlappingOrders.length > 0;
+  } catch (error) {
+    console.error("Error checking existing rentals:", error);
+    return false;
+  }
+}
+
 //>>>>>>>>>>>>>>>>>>>>> delete Order -- Admin >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 exports.deleteOrder = asyncWrapper(async (req, res, next) => {
   const order = await orderModel.findById(req.params.id);
@@ -140,7 +207,7 @@ exports.deleteOrder = asyncWrapper(async (req, res, next) => {
     return next(new ErrorHandler("Order not found with given Id", 400));
   }
 
-  await order.remove();
+  await orderModel.findByIdAndDelete(req.params.id);
 
   res.status(200).json({
     success: true,

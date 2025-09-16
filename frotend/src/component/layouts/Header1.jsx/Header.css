@@ -1,240 +1,626 @@
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-blur: blur(10px);
+  --lime-primary: #3b82f6;
+  --lime-secondary: #2563eb;
+  --lime-dark: #1d4ed8;
+  --white-glass: rgba(255, 255, 255, 0.95);
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
 .header {
-  background-color: #fff;
-  font-family: "Roboto", sans-serif;
+  background: transparent !important;
+  backdrop-filter: none !important;
+  font-family: "Inter", "Poppins", sans-serif;
   font-size: 0.75rem;
   padding: 0;
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 999;
+  z-index: 1000;
   display: flex;
   flex-direction: column;
-  height: 7rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 6rem; /* Increased from 5rem */
+  border: none !important;
+  transition: var(--transition-smooth);
+  box-shadow: none !important;
 }
 
-
-
-.headerTop {
-  width: 100%;
-
-  background-color: rgb(37, 37, 37);
-  color: rgb(255, 255, 255);
-  display: grid;
-  font-family: "Roboto", sans-serif;
-  font-size: 12px;
-  grid-template-columns: 1fr minmax(465px, 1fr);
-  height: 33px;
-  margin: 0px auto;
-  padding: 0px;
-  position: relative;
-  vertical-align: middle;
-  z-index: 999;
+.header.scrolled {
+  backdrop-filter: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
-.headerTopLeft {
-  height: fit-content;
-  font-family: "Roboto", sans-serif;
-  font-size: 16px !important;
-  font-weight: 500;
-  margin-left: 2.5rem;
- margin-bottom: -10px;
-}
-.headerTopLeft > p {
- position: absolute;
-    top: -9px;
-}
-
-.headerTopRight {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 400;
-  font-size: 12px !important;
-  font-family: "Roboto", sans-serif;
-}
-
-.headerRetailer {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  
-}
-
-.headerFlag {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.headerLogin {
-  width: 110px;
- cursor: pointer;
-  background-color: rgb(75, 66, 66);
-  padding-right: 5px;
-  padding-left: 30px;
-}
-.headerLogin button {
-  font-family: "Roboto", sans-serif;
-  height: 33px;
-  border: none;
-  text-align: center;
-  color: rgb(255, 255, 255);
-  background-color: rgb(75, 66, 66);
-  font-weight: 400;
-  font-size: 12px;
-  cursor: pointer;
-}
-.headerLogin > button:hover {
-  color: #ed1c24;
-  transition: all 0.25s ease;
-}
 .headerBottom {
   height: 100%;
-  /* border: 2px solid; */
   display: flex;
-  justify-content: space-around;
-}
-.headerBottom__logo{
-  width:  auto;
-height: 52px;
-padding: auto;
-
-align-self: center;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 3rem 0 0; /* Remove left padding */
+  background: transparent !important;
+  min-height: 100px;
 }
 
-
-.headerBottom__logo_main{
-    height: 5rem;
-    align-self: center;
-    padding-left: 25px;
-    margin-top: 7px;
+.header_logo_image {
+  height: clamp(3rem, 8vw, 4rem) !important; /* Adjusted size without white background */
+  width: auto;
+  filter: brightness(1.2) drop-shadow(0 4px 8px rgba(255, 255, 255, 0.8)); /* White drop shadow for visibility */
+  transition: all 0.3s ease;
+  background: transparent !important;
+  mix-blend-mode: normal;
 }
-.header_mobile_menu{
+
+.header_logo_image:hover {
+  filter: brightness(1.3) drop-shadow(0 6px 12px rgba(255, 255, 255, 0.9));
+}
+
+.headerBottom__logo_main {
+  height: clamp(3rem, 8vw, 4rem) !important; /* Adjusted size without white background */
+  width: auto;
+  position: relative;
+  z-index: 1;
+  margin-left: 2rem; /* Reduced margin since no white background */
+  filter: brightness(1.2) drop-shadow(0 4px 8px rgba(255, 255, 255, 0.8));
+  transition: all 0.3s ease;
+  background: transparent !important;
+  mix-blend-mode: normal;
+}
+
+.headerBottom__logo_main:hover {
+  transform: scale(1.05);
+  filter: brightness(1.3) drop-shadow(0 6px 12px rgba(255, 255, 255, 0.9));
+}
+
+.header_brand_name {
+  display: none !important;
+}
+
+.header_logo_link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+  padding-left: 2rem; /* Reduced padding since no white background */
+}
+
+.header_logo_link:hover {
+  transform: scale(1.05);
+}
+
+.header_logo_image {
+  height: 150px; /* Increased from 50px */
+  width: auto;
+  filter: brightness(1.2) drop-shadow(0 4px 8px rgba(255, 255, 255, 0.8));
+  transition: all 0.3s ease;
+  /* Remove PNG transparency artifacts */
+  background: transparent !important;
+  mix-blend-mode: normal;
+}
+
+.header_logo_image:hover {
+  filter: brightness(1.3) drop-shadow(0 6px 12px rgba(255, 255, 255, 0.9));
+}
+
+.header_tagline {
+  color: #fff;
+  font-size: 1.5rem; /* Increased from 1.1rem */
+  font-weight: 500;
+  margin-left: 0.5rem;
+  font-family: "Inter", "Poppins", sans-serif;
+  opacity: 0.85;
+}
+
+.header_mobile_menu {
   display: none;
 }
-.headerBottom_navMenu{
-width: auto;
-height: 64px;
 
-}
-.headerBottom_navMenu ul{
+.headerBottom_navMenu {
+  flex: 1;
   display: flex;
-gap: .9rem;
-  height: 50px;
+  justify-content: center;
+  max-width: 800px; /* Increased from 600px */
+}
+
+.headerBottom_navMenu ul {
+  display: flex;
+  gap: 2rem; /* Reduced gap to accommodate new layout */
+  height: fit-content;
   width: auto;
   text-align: center;
-  margin-top: 5px;
-  
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  align-items: center;
 }
-.headerBottom_navMenu ul li{
-padding: 18px 14px;
+
+.nav-item {
+  background: none !important;
+  border: none !important;
+  padding: 16px 24px; /* Increased padding */
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 700; /* Increased from 600 */
+  font-size: 18px; /* Increased from 16px */
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.3);
+  font-family: "Inter", "Poppins", sans-serif;
+  min-height: 50px; /* Added minimum height */
+  display: flex;
+  align-items: center;
+}
+
+.nav-item::before {
+  display: none;
+}
+
+.nav-item:hover {
+  color: #3b82f6 !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(12px);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+  text-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.nav-item a {
+  color: inherit;
+  text-decoration: none;
+  font-size: 18px; /* Increased from 16px */
+  font-weight: 700; /* Increased from 600 */
+  font-family: "Inter", "Poppins", sans-serif;
+  position: relative;
+  z-index: 1;
+  transition: var(--transition-smooth);
+  display: block;
+  padding: 0;
+}
+
+.nav-item:hover a {
+  color: #3b82f6;
+  text-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+/* Active state (current page) */
+.nav-item.active {
+  color: #3b82f6 !important;
+  background: rgba(59, 130, 246, 0.1) !important;
+}
+
+.nav-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: #3b82f6;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.6);
+}
+
+.nav-item.active a {
+  color: #3b82f6 !important;
+}
+
+.headerBotttom_icons {
+  display: flex;
+  gap: 2rem; /* Increased from 1.5rem */
+  align-items: center;
+  font-size: 16px; /* Increased from 14px */
   width: auto;
-list-style: none;
-  height: fit-content;
-     padding: 30px;
-     padding-bottom: 10px;
-    
-     
-
-}
-.headerBottom_navMenu ul li a{
-   color: #121212;
-   text-decoration: none;
-    font-size: 15px;
-    font-weight: 500;
-
-    margin-top: 20px;
-    font-family: 'Roboto', sans-serif;
 }
 
-.headerBottom_navMenu ul li a:hover{
-  color: #E30605;
-  transition: .5s ease-in-out;
-
-
-}
-
-.headerBotttom_icons{
+.headerBotttom_icons > * {
+  color: rgba(255, 255, 255, 0.9);
+  transition: var(--transition-smooth);
+  padding: 16px; /* Increased from 12px */
+  border-radius: 12px;
+  min-height: 50px; /* Added minimum height */
   display: flex;
-  gap: 1.1rem;
   align-items: center;
-  font-size: 14px;
-   width: auto;
-
 }
 
-.headerBotttom_icons>*:hover{
-  color: #E30605;
-  transition: .5s ease-in-out;
-
-
-}
-.makeStyles-flagIcon-1 {
-       width: 16px !important;
-    height: 16px !important;
-    align-self: center !important;
-    padding-right: 2px !important;
-    margin-bottom: -4px
-}
-.css-i4bv87-MuiSvgIcon-root
-{
-  height: 18px !important;
-}
-.css-6hp17o-MuiList-root-MuiMenu-list{
-  background-color: rgb(29, 28, 28);
-  /* border: none !important; */
-}
-.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root:hover{
-  background-color: #E30605 !important;
-
+.headerBotttom_icons > *:hover {
+  color: #3b82f6;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  transform: translateY(-2px) scale(1.05);
 }
 
+/* Glass Search Container - Remove conflicting styles */
+.search-container {
+  /* Remove this class since we're using Material-UI styles */
+}
+
+/* Ensure no conflicting input styles */
+.MuiInputBase-root {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.MuiInputBase-input {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  padding: 0 !important;
+}
+
+.MuiInputBase-input:focus {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Remove any form styling that might add borders */
+form {
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+}
+
+/* White Signup Button Styling */
+.signup-button {
+  background: var(--white-glass) !important;
+  backdrop-filter: blur(10px) !important;
+  color: #1a1a1a !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 50px !important;
+  padding: 16px 32px !important; /* Increased padding */
+  font-weight: 700 !important; /* Increased from 600 */
+  font-size: 16px !important; /* Increased from 14px */
+  font-family: "Inter", "Poppins", sans-serif !important;
+  cursor: pointer !important;
+  transition: var(--transition-smooth) !important;
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15) !important;
+  text-transform: none !important;
+  min-width: 120px !important; /* Increased from 100px */
+  min-height: 50px !important; /* Added minimum height */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.signup-button::before {
+  display: none;
+}
+
+.signup-button:hover {
+  background: rgba(255, 255, 255, 1) !important;
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2) !important;
+  color: #1a1a1a !important;
+}
+
+.signup-button:active {
+  transform: translateY(-1px) scale(0.98) !important;
+}
+
+/* Mobile Responsive */
 @media (max-width: 899px) {
- .headerTop{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
- }
- .headerTopLeft{
-  margin-bottom: 3px;
- }
- .headerTopLeft > p {
- position: absolute;
-    top: -13px;
-}
-
-.headerRetailer{
-  display: none;
-}
-.headerLogin{
-  display: none;
-}
-
-
- .headerBottom{
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
- }
- .headerBottom__logo{
-    display: flex;
- }
-
-.header_mobile_menu{
-  display: flex;
-  gap: .9rem;
-  align-items: center;
-
-}
-  .search_Bar{
-    display: none;
+  .header {
+    height: 5rem; /* Slightly larger on mobile too */
+    background: transparent !important;
+    backdrop-filter: none !important;
   }
- .headerBottom_navMenu{
+
+  .headerBottom {
+    padding: 0 1rem 0 0;
+    min-height: 80px;
+  }
+
+  .headerBottom__logo::before {
+    height: 6rem; /* Adjusted for mobile */
+    top: -0.5rem;
+    right: -2rem; /* Adjusted for mobile */
+    border-radius: 0 25px 25px 0;
+  }
+
+  .headerBottom__logo {
+    height: 5rem; /* Adjusted for mobile */
+  }
+
+  .headerBottom__logo_main {
+    height: clamp(2.5rem, 6vw, 3rem) !important;
+    margin-left: 1.5rem;
+  }
+
+  .header_logo_image {
+    height: clamp(2.5rem, 6vw, 3rem) !important;
+  }
+
+  .header_logo_link {
+    padding-left: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .headerBottom {
+    padding: 0 0.5rem 0 0;
+  }
+
+  .headerBottom__logo::before {
+    height: 5rem;
+    top: -0.5rem;
+    right: -1.5rem; /* Adjusted for mobile */
+    border-radius: 0 20px 20px 0;
+  }
+
+  .headerBottom__logo {
+    height: 4rem;
+  }
+
+  .headerBottom__logo_main {
+    height: clamp(2rem, 5vw, 2.5rem) !important;
+    margin-left: 1rem;
+  }
+
+  .header_logo_image {
+    height: clamp(2rem, 5vw, 2.5rem) !important;
+  }
+
+  .header_logo_link {
+    padding-left: 1rem;
+  }
+}
+
+/* Ensure logo background works with fixed header and extends to very top */
+.header.scrolled .headerBottom__logo::before {
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(15px);
+  top: -1rem; /* Ensure it still reaches top when scrolled */
+}
+
+/* Enhanced logo styling for better contrast on larger white background */
+.headerBottom__logo_main,
+.header_logo_image {
+  filter: brightness(1.2) drop-shadow(0 3px 6px rgba(255, 255, 255, 0.8)) !important;
+}
+
+.headerBottom__logo_main:hover,
+.header_logo_image:hover {
+  filter: brightness(1.3) drop-shadow(0 5px 10px rgba(255, 255, 255, 0.9)) !important;
+}
+
+/* Smooth scrolling for navigation links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus states for accessibility */
+.nav-item a:focus,
+.signup-button:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Remove old styles */
+.headerTop,
+.headerTopLeft,
+.headerTopRight,
+.headerRetailer,
+.headerFlag,
+.headerLogin {
   display: none;
- }
+}
+
+/* Logo specific enhancements */
+.MuiToolbar-root img {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  /* Remove any PNG background artifacts */
+  mix-blend-mode: normal;
+}
+
+/* Enhanced logo hover effects */
+.MuiToolbar-root .logo img:hover {
+  filter: brightness(1.4) drop-shadow(0 8px 16px rgba(59, 130, 246, 0.8)) contrast(1.3) saturate(1.3) !important;
+}
+
+/* Search container enhancements */
+.search-container-enhanced {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.search-container-enhanced:focus-within {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.4) !important;
+  transform: scale(1.02) !important;
+}
+
+/* Navigation button enhancements */
+.nav-button-enhanced {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.nav-button-enhanced::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: -100% !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent) !important;
+  transition: left 0.5s !important;
+}
+
+.nav-button-enhanced:hover::before {
+  left: 100% !important;
+}
+
+/* Cart badge enhancements */
+.MuiBadge-badge {
+  background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+  color: white !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  min-width: 20px !important;
+  height: 20px !important;
+  border-radius: 10px !important;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4) !important;
+}
+
+/* Profile avatar enhancements */
+.profile-avatar-enhanced {
+  transition: all 0.3s ease !important;
+  border: 2px solid rgba(59, 130, 246, 0.3) !important;
+}
+
+.profile-avatar-enhanced:hover {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5) !important;
+  transform: scale(1.05) !important;
+}
+
+/* Mobile responsive enhancements */
+@media (max-width: 1200px) {
+  .MuiToolbar-root {
+    padding: 0 20px !important;
+  }
+  
+  .search-container-enhanced {
+    min-width: 250px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .MuiAppBar-root {
+    min-height: 80px !important;
+  }
+  
+  .MuiToolbar-root {
+    min-height: 80px !important;
+    padding: 0 15px !important;
+  }
+  
+  .search-container-enhanced {
+    min-width: 200px !important;
+    height: 44px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .MuiAppBar-root {
+    min-height: 70px !important;
+  }
+  
+  .MuiToolbar-root {
+    min-height: 70px !important;
+    padding: 0 10px !important;
+  }
+}
+
+/* Logo PNG background removal */
+.logo-no-bg {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  /* For PNG transparency enhancement */
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+}
+
+/* Enhanced hover states */
+.hover-glow:hover {
+  filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.8)) !important;
+}
+
+/* Smooth transitions for all interactive elements */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 
+/* Logo PNG background removal */
+.logo-no-bg {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  /* For PNG transparency enhancement */
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+}
+
+/* Enhanced hover states */
+.hover-glow:hover {
+  filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.8)) !important;
+}
+
+/* Smooth transitions for all interactive elements */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+  
+  .MuiToolbar-root {
+    min-height: 80px !important;
+    padding: 0 15px !important;
+  }
+  
+  .search-container-enhanced {
+    min-width: 200px !important;
+    height: 44px !important;
+  }
+
+@media (max-width: 600px) {
+  .MuiAppBar-root {
+    min-height: 70px !important;
+  }
+  
+  .MuiToolbar-root {
+    min-height: 70px !important;
+    padding: 0 10px !important;
+  }
+}
+
+/* Logo PNG background removal */
+.logo-no-bg {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  /* For PNG transparency enhancement */
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+}
+
+/* Enhanced hover states */
+.hover-glow:hover {
+  filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.8)) !important;
+}
+
+/* Smooth transitions for all interactive elements */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+
+/* Logo PNG background removal */
+.logo-no-bg {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  /* For PNG transparency enhancement */
+  image-rendering: -webkit-optimize-contrast !important;
+  image-rendering: crisp-edges !important;
+}
+
+/* Enhanced hover states */
+.hover-glow:hover {
+  filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.8)) !important;
+}
+
+/* Smooth transitions for all interactive elements */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}

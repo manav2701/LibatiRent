@@ -6,7 +6,8 @@ export const dispalyMoney = function(num) {
   });
 
   const arr = numFormate.format(num).split(".", 1);
-  return arr[0];
+  // Replace ₹ with AED. 
+  return arr[0].replace("₹", "AED. ");
 };
 
 // Calculate Discount Percentage

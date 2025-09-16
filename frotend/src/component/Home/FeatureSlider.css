@@ -88,7 +88,7 @@ margin-left: 5px;
 .featured_slides:hover .featured_title,
 .featured_slides:hover .final_price,
 .featured_slides:hover .old_price {
-color: #e30605;
+color: #3b82f6;
 }
 
 @media screen and (max-width: 1199px) {
@@ -252,8 +252,8 @@ border: none;
 
 .swiper-slide-active {
 opacity: 1;
-border-left: 5px solid #e30605;
-border-right: 5px solid #e30605;
+border-left: 5px solid #3b82f6;
+border-right: 5px solid #ef4444;
 }
 
 /* Set transparent background for swiper dots */
@@ -277,4 +277,10 @@ background-color: black;
 .featured_swiper .swiper-slide-next + .swiper-slide,
 .featured_swiper .swiper-slide-prev + .swiper-slide {
   margin-left: 10px;
+}
+
+/* Scroll object color (if any) */
+.scroll-object {
+  color: #3b82f6;
+  animation: float 3s ease-in-out infinite;
 }

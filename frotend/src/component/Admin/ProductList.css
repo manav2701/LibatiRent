@@ -1,163 +1,144 @@
-.product-list {
-  display: flex;
-  align-items: flex-start;
-  background-color: #f1f1f1;
-  justify-content: center;
-  width: 100%;
-  gap: 1rem;
-  overflow: hidden;
-  margin-top: -1rem !important;
-  padding: 0;
+:root{
+  --bg-secondary: #0f1724;
+  --accent-blue: #60a5fa;
+  --accent-red: #ed1c24;
+  --border-color: rgba(255,255,255,0.06);
 }
 
-.listSidebar {
-  width: 20%;
-  margin: 0;
-  height: fit-content;
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
+/* Reset any overflow that might be set on earlier classes */
+.product-list-root,
+.product-list,
+.pl-root {
+  overflow: visible !important;
+}
+
+/* Basic layout (matches makeStyles root / container) */
+.MuiDataGrid-root {
+  background: transparent;
+}
+
+/* native scroll container */
+.pl-native-scroll {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable;
+  box-sizing: border-box;
+  padding-bottom: 6px;
+}
+
+/* The inner wrapper that forces width so native scroll actually happens */
+.pl-table-inner {
+  width: fit-content;
   display: block;
+  box-sizing: border-box;
+  padding-bottom: 1px;
 }
 
-
-
-  .toggleBox {
-    width: 16rem;
-    margin: 0;
-    height: fit-content;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-    display: block;
-    z-index: 100;
-    position: absolute;
-    top: 58px;
-    left: 17px;
-  }
-@media only screen and (max-width: 999px) {
-  .listSidebar {
-    display: none;
-  }
-}
-
-
-.list-table {
-  width: 80%;
-  height: fit-content;
+/* Custom scrollbar container below the grid */
+.pl-custom-scrollbar {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: center;
-}
-
-@media only screen and (max-width: 999px) {
-  .list-table {
-    width: 100%;
-  }
-}
-
-.productListContainer
-{ background-color: white ;
-  width: 96%;
-  height: fit-content;
-  padding: 1rem;
-  border-radius: 1px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-
-}
-.productListTable {
-  width: 100%;
-  overflow-x: auto; 
-  scrollbar-width: thin; 
-  scrollbar-color: #000 #f1f1f1; 
-  width: calc(100% - 30px); 
-}
-
-
-.productListHeading {
-  font-size: 1.5rem;
-  font-weight: 700;
-  padding: 10px;
-  margin: 0;
-  padding: 0;
-  color: #414141;
-  width: 100%;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5);
-  text-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.5) ;
-}
-.column-header{
-  width: fit-content  ;
-  padding: 0px 10px ;
-  font-size: 16px ;
-  font-weight: 600 ;
   align-items: center;
-  margin: 0px 0px 0px 15px ;
+  gap: 8px;
+  margin-top: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 4px;
 }
 
-.column-header:hover{
-  color: #ed1c24;
-  background-color: #f2f2f2c1;
+/* left/right buttons */
+.pl-scroll-btn {
+  background: rgba(255,255,255,0.03);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 6px;
+  width: 36px;
+  height: 36px;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  user-select: none;
+}
+.pl-scroll-btn:hover {
+  background: rgba(255,255,255,0.06);
 }
 
-
-.column-header1 {
-  width: fit-content ;
-  padding: 0px 10px ;
-  font-size: 16px ;
-  font-weight: 600 ;
-  margin-left: 3rem ;
+/* the track */
+.pl-scroll-track {
+  position: relative;
+  height: 12px;
+  background: rgba(255,255,255,0.04);
+  flex: 1 1 auto;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+  display: flex;
+  align-items: center;
 }
 
+/* the thumb */
+.pl-scroll-thumb {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 12px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, var(--accent-red), #a8001c);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+  transform: translateX(0);
+  transition: background .12s ease;
+  touch-action: none; /* important for dragging on touch */
+}
 
+/* hover / active */
+.pl-scroll-thumb:hover {
+  filter: brightness(0.95);
+}
 
-.icon-{
+/* container styling */
+.productListContainer,
+.pl-table-inner .MuiDataGrid-root {
+  color: #fff;
+}
+
+/* Small responsive tweaks */
+@media (max-width: 900px) {
+  .pl-custom-scrollbar { gap: 6px; padding: 4px; }
+  .pl-scroll-btn { width: 32px; height: 32px; }
+}
+
+/* Column header helpers matching your CSS */
+.column-header {
+  padding: 0px 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.column-header1 { padding: 0px 10px; font-weight: 600; }
+
+/* icon styles */
+.icon- {
   font-size: 20px;
   color: #fff;
   background-color: #414141;
   padding: 5px;
   border-radius: 5px;
   cursor: pointer;
-  margin-left: 3rem ;
+  margin-left: 3rem;
 }
 .iconbtn {
-   font-size: 20px;
+  font-size: 20px;
   color: #fff;
-  background-color: #414141;
+  background-color: var(--accent-blue);
   padding: 5px;
   border-radius: 5px;
   cursor: pointer;
   margin-left: 0.5rem;
 }
-.icon-:hover{
- background-color: #ed1c24;
 
-}
-.iconbtn:hover{
- background-color: #ed1c24;
-
-}
-
-.MuiDataGrid-root .MuiDataGrid-cell--textLeft{
-  margin-left: 1.2rem !important;
-  color: #000 !important;
-}
-
+/* hide on small screens */
 @media (max-width: 699px) {
-  .hide-on-mobile {
-    display: none;
-  }
-}
-
-
-/* orderList status  */
-.greenColor {
-  color: green !important;
-  font-weight: 600;
-}
-
-.redColor {
-  color: red !important;
-  font-weight: 600;
+  .hide-on-mobile { display: none; }
 }

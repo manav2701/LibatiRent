@@ -1,7 +1,8 @@
 const app = require("./app");
 const dotenv = require("dotenv");
 const connectDB = require("./db/connectDB")
-const cloudinary = require("cloudinary");
+// const cloudinary = require("cloudinary");
+const otpRoutes = require("./routes/otpRoutes");
 
 // Handling Uncaught Execption => anything not defind Uncaught Execption 
 
@@ -20,13 +21,15 @@ connectDB();
 
 // conncet with cloudinary
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_NAME,
-  api_key: process.env.API_KEY,
-  api_secret: process.env.API_SECRET,
-});
+// cloudinary.config({
+//   cloud_name: process.env.CLOUDINARY_NAME,
+//   api_key: process.env.API_KEY,
+//   api_secret: process.env.API_SECRET,
+// });
 
 const PORT = process.env.PORT || 5000;
+
+app.use("/api/otp", otpRoutes);
 
 const server = app.listen(PORT, () => {
   console.log(`Server is listening on PORT ${process.env.PORT}`);

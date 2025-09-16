@@ -400,7 +400,7 @@ function ProductReviews() {
 
                 {reviews && reviews.length > 0 ? (
                   <div className="productListContainer">
-                    <h4 id="productListHeading">ALL PRODUCTS</h4>
+                    <h4 id="productListHeading">ALL REVIEWS</h4>
                     <DataGrid
                       rows={rows}
                       columns={columns}

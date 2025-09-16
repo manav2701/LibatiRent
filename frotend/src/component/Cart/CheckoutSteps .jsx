@@ -7,13 +7,62 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     marginBottom: theme.spacing(2),
+    background: "transparent", // Remove background fill
+    borderRadius: 18,
+    boxShadow: "none", // Remove box shadow
+    border: "none",    // Remove border
+    padding: "2rem 1.5rem",
+    fontFamily: "'Inter','Poppins',sans-serif",
+    position: "relative",
+    zIndex: 2,
     [theme.breakpoints.down("sm")]: {
       marginBottom: theme.spacing(1),
+      padding: "1rem 0.5rem",
     },
-    [theme.breakpoints.down("xm")]: {
-      fontSize: 12,
-   
+  },
+  stepReader: {
+    marginTop: "7rem",
+    background: "transparent", // Remove background fill
+    borderRadius: 18,
+    boxShadow: "none", // Remove box shadow
+    border: "none",    // Remove border
+    padding: "0.5rem 0",
+    fontFamily: "'Inter','Poppins',sans-serif",
+    position: "relative",
+    zIndex: 2,
+  },
+  stepLabel: {
+    color: "#dfe8edff !important",
+    fontWeight: 700,
+    fontFamily: "'Inter','Poppins',sans-serif",
+    "& .MuiStepLabel-label": {
+      color: "#e0e7ebff !important",
+      fontWeight: 700,
+      fontFamily: "'Inter','Poppins',sans-serif",
+      fontSize: "1.1rem",
+      letterSpacing: "0.5px",
+      textShadow: "0 2px 12px #88c9e86e",
     },
+    "&.MuiStepLabel-active .MuiStepLabel-label": {
+      color: "#38bdf8 !important",
+      fontWeight: 800,
+      textShadow: "0 2px 12px #0ea5e9a0",
+    },
+    "&.MuiStepLabel-completed .MuiStepLabel-label": {
+      color: "#4CAF50 !important",
+    },
+    [theme.breakpoints.down("xs")]: {
+      "& .MuiStepLabel-label": {
+        fontSize: 12,
+      },
+    },
+  },
+  stepperOverride: {
+    background: "rgba(15,23,42,0.85) !important", // fixes the white background
+    boxShadow: "0 8px 32px 0 rgba(59,130,246,0.18)",
+    borderRadius: 18,
+    border: "1.5px solid rgba(59,130,246,0.18)",
+    padding: "1rem",
   },
 }));
 
@@ -23,76 +72,60 @@ const ColorlibConnector = withStyles((theme) => ({
   },
   active: {
     "& $line": {
-      backgroundColor: "#000000",
+      background: "linear-gradient(90deg, #3b82f6, #ef4444)",
     },
   },
   completed: {
     "& $line": {
-      backgroundColor: "#000000",
+      background: "linear-gradient(90deg, #4CAF50, #3b82f6)",
     },
   },
   line: {
     height: 3,
     border: 0,
-    backgroundColor: "#dddddd",
+    background: "rgba(59,130,246,0.18)",
     borderRadius: 1,
   },
 }))(StepConnector);
 
 const useColorlibStepIconStyles = makeStyles((theme) => ({
-  stepReader :{
-   
-    [theme.breakpoints.down("xs")]: {
-      marginLeft: "-2rem",
-    },
-  },
   root: {
-    backgroundColor: "#000000",
+    background: "rgba(30,41,59,0.95)",
     zIndex: 1,
-    color: "#FFFFFF",
-    width: 40,
-    height: 40,
+    color: "#bae6fd",
+    width: 44,
+    height: 44,
     display: "flex",
     borderRadius: "50%",
     justifyContent: "center",
     alignItems: "center",
-    border: `2px solid ${theme.palette.background.paper}`,
-    fontSize: 16,
-    cursor: "pointer",
-    margin: 0,
+    border: `2px solid #334155`,
+    fontSize: 18,
+    fontWeight: 700,
+    boxShadow: "0 2px 12px #33415544",
+    transition: "all 0.3s",
     [theme.breakpoints.down("sm")]: {
-      width: 20,
-      height: 20,
+      width: 28,
+      height: 28,
       fontSize: 14,
     },
     [theme.breakpoints.down("xs")]: {
-      width: 15,
-      height: 15,
+      width: 20,
+      height: 20,
       fontSize: 12,
-       
-      "& .MuiStepLabel-label": {
-        fontSize: 12,
-      },
     },
   },
   active: {
-    backgroundColor: "#ed1c24",
-    boxShadow: "0 4px 10px 0 rgba(0,0,0,.25)",
-    marginTop: "0rem",
+    background: "linear-gradient(135deg, #3b82f6 0%, #ef4444 100%)",
+    color: "#fff",
+    border: "2px solid #38bdf8",
+    boxShadow: "0 4px 18px #38bdf8a0",
   },
   completed: {
-    backgroundColor: "#000000",
-    margin: "0rem",
-  },
-
-  stepLabel: {
-    cursor: "pointer",
-    [theme.breakpoints.down("xs")]: {
-      "&.MuiStepLabel-label ": {
-        fontSize: 12,
-      },
-      fontSize: 12,
-    },
+    background: "linear-gradient(135deg, #4CAF50 0%, #3b82f6 100%)",
+    color: "#fff",
+    border: "2px solid #4CAF50",
+    boxShadow: "0 2px 12px #4CAF5080",
   },
 }));
 
@@ -101,12 +134,13 @@ const ColorlibStepIcon = ({ active, completed, icon, onClick }) => {
 
   return (
     <div
-      className={`${classes.root} ${active && classes.active} ${completed &&
-        classes.completed}`}
+      className={`${classes.root} ${active ? classes.active : ""} ${
+        completed ? classes.completed : ""
+      }`}
       onClick={onClick}
       style={
         !active && !completed
-          ? { backgroundColor: "#666666", marginTop: "0", color: "white" }
+          ? { background: "rgba(30,41,59,0.95)", color: "#bae6fd" }
           : null
       }
     >
@@ -133,22 +167,24 @@ const CheckoutSteps = ({ activeStep }) => {
   };
 
   return (
-    <div className={classes.stepReader} style={{ marginTop: "7rem" }}>
-      <div className={classes.root}>
-        <Stepper activeStep={activeStep} connector={<ColorlibConnector />}>
-          {steps.map((step, index) => (
-            <Step key={step.label}>
-              <StepLabel
-                StepIconComponent={ColorlibStepIcon}
-                onClick={() => handleStepClick(index)}
-                className={classes.stepLabel}
-              >
-                {step.label}
-              </StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-      </div>
+    <div className={classes.stepReader}>
+      <Stepper
+        activeStep={activeStep}
+        connector={<ColorlibConnector />}
+        className={classes.stepperOverride} // <-- override applied here
+      >
+        {steps.map((step, index) => (
+          <Step key={step.label}>
+            <StepLabel
+              StepIconComponent={ColorlibStepIcon}
+              onClick={() => handleStepClick(index)}
+              className={classes.stepLabel}
+            >
+              {step.label}
+            </StepLabel>
+          </Step>
+        ))}
+      </Stepper>
     </div>
   );
 };

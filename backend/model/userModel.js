@@ -28,11 +28,11 @@ const userSchema = new mongoose.Schema({
   avatar: {
     public_id: {
       type: String,
-      required: true,
+      default: "default_avatar",
     },
     url: {
       type: String,
-      required: true,
+      default: "https://via.placeholder.com/150x150/cccccc/000000?text=User",
     },
   },
   role: {

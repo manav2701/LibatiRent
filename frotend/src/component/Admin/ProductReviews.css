@@ -1,8 +1,8 @@
 .productReviewsContainer {
   width: 100%;
   box-sizing: border-box;
-  background-color: rgb(255, 255, 255);
-  border-left: 1px solid rgba(0, 0, 0, 0.158);
+  background-color: var(--bg-secondary);
+  border-left: 1px solid var(--border-color);
   height: 100vh;
 }
 
@@ -13,11 +13,11 @@
   align-items: center;
   margin: auto;
   padding: 3vmax;
-  background-color: white;
+  background-color: var(--bg-secondary);
 }
 
 .productReviewsFormHeading {
-  color: rgba(0, 0, 0, 0.733);
+  color: var(--accent-blue);
   font: 300 2rem "Roboto";
   text-align: center;
 }
@@ -33,10 +33,12 @@
   padding-right: 1vmax;
   width: 100%;
   box-sizing: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.267);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   font: 300 0.9vmax cursive;
   outline: none;
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 .productReviewsForm > div > svg {

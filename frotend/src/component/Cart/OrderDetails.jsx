@@ -86,9 +86,12 @@ const OrderDetailsSection = ({ item, totalDiscount, totalPrice }) => {
           <Typography variant="body2" className={classes.finalPrice}>
             {totalPrice}
           </Typography>
-          <Typography variant="body2" className={classes.discountPrice}>
-            {totalDiscount}
-          </Typography>
+          {/* Only show discount if there is a discount */}
+          {parseFloat(totalDiscount) > 0 && (
+            <Typography variant="body2" className={classes.discountPrice}>
+              {totalDiscount}
+            </Typography>
+          )}
         </div>
         <div>
           <Typography variant="body2" className={classes.paymentStatus}>

@@ -4,19 +4,21 @@ import { Button } from "@material-ui/core";
 import MenuIcon from "@mui/icons-material/Menu";
 import { IconButton } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import LibatiLogo from "../../Image/about/Libati.png";
+import { useSelector } from "react-redux";
+import ProfileModal from "../layouts/Header1.jsx/ProfileModel";
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-   zIndex: 999,
-    background: "#ffffff",
-    
+    zIndex: 999,
+    background: "transparent !important",
+
     width: "100%",
     padding: "1.5rem 1rem 1rem 1rem",
-    boxShadow:
-      "1px 1px 2px rgba(0, 0, 0, 0.1), 2px 2px 4px rgba(0, 0, 0, 0.2), 4px 4px 8px rgba(0, 0, 0, 0.3)",
+    boxShadow: "none !important",
 
     [theme.breakpoints.between("999")]: {
       flexDirection: "row",
@@ -42,23 +44,20 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   dashboardHead: {
-    fontSize: "2rem",
-    fontWeight: 900,
-    color: "black",
-    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.1)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    transition: "all 0.3s ease",
 
     // Responsive styles
     [theme.breakpoints.down("sm")]: {
-      fontSize: "1.5rem",
       marginBottom: "0.5rem",
     },
     [theme.breakpoints.down("999")]: {
-      fontSize: "1.8rem",
       marginBottom: 0,
     },
     [theme.breakpoints.down("xs")]: {
       marginRight: "1.5rem",
-      fontSize: "1.8rem",
     },
   },
   contactButton: {
@@ -72,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: "1px",
     background: "#414141",
     transition: "background-color 0.3s",
-    marginRight: "2rem",
+    marginRight: "1rem", // reduced from 2rem to move left
     // Responsive styles
     [theme.breakpoints.down("sm")]: {
       fontSize: "14px",
@@ -92,42 +91,82 @@ const useStyles = makeStyles((theme) => ({
   },
   headerBottom__logo_main: {
     height: "3.5rem",
-    alignSelf: "center",
-    paddingLeft: "25px",
-  "& img": {
-    height: "100%",
     width: "auto",
+    filter: "brightness(1.2) drop-shadow(0 4px 8px rgba(59, 130, 246, 0.5))",
+    transition: "all 0.3s ease",
+    "&:hover": {
+      transform: "scale(1.05)",
+      filter: "brightness(1.3) drop-shadow(0 6px 12px rgba(59, 130, 246, 0.7))",
+    },
+    [theme.breakpoints.down("sm")]: {
+      height: "3rem",
+    },
+    [theme.breakpoints.down("xs")]: {
+      height: "2.5rem",
+    },
   },
-
+  logoLink: {
+    textDecoration: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    height: "100%",
+    transition: "all 0.3s ease",
+    "&:hover": {
+      transform: "scale(1.05)",
+    },
   },
-})); 
+  // Add a style for the admin profile icon (white)
+  adminProfileIcon: {
+    marginLeft: "0.5rem",
+    marginRight: "0.5rem",
+    "& .profile-icon": {
+      color: "#fff !important", // changed from #ed1c24
+      background: "rgba(255,255,255,0.08) !important", // changed from red tint to white tint
+      border: "1px solid #fff !important", // changed from #ed1c24
+      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+    },
+    "& .profile-icon:hover": {
+      background: "#fff !important", // changed from #ed1c24
+      color: "#23272f !important", // contrast text on white
+    },
+    // Ensure modal arrow is also white
+    "& .arrow-icon": {
+      color: "#fff !important", // changed from #ed1c24
+    },
+  },
+}));
 
 const Navbar = ({ toggleHandler }) => {
   const classes = useStyles();
+  const { user, isAuthenticated } = useSelector((state) => state.userData || {});
 
   return (
     <nav className={classes.navbar}>
       <IconButton className={classes.menuIcon} onClick={toggleHandler}>
         <MenuIcon fontSize="2rem" />
       </IconButton>
+
       <div className={classes.dashboardHead}>
-        <Link
-          to="/admin/dashboard"
-          style={{ textDecoration: "none", color: "none" , width: "100%" , height: "100%"}}
-        >
+        <Link to="/admin/dashboard" className={classes.logoLink}>
           <img
-            src={require("../../Image/logo.png")}
-            alt="logo"
+            src={LibatiLogo}
+            alt="Libati Admin Dashboard"
             className={classes.headerBottom__logo_main}
           />
         </Link>
       </div>
-      <Link
-        to="/contact"
-        style={{ textDecoration: "none", color: "none" }}
-      >
-        <Button className={classes.contactButton}>Contact Us</Button>
-      </Link>
+
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <Link to="/contact" style={{ textDecoration: "none", color: "none" }}>
+          <Button className={classes.contactButton}>Contact Us</Button>
+        </Link>
+        {/* ProfileModal in admin navbar, styled red */}
+        <div className={classes.adminProfileIcon}>
+          <ProfileModal user={user} isAuthenticated={isAuthenticated} />
+        </div>
+      </div>
     </nav>
   );
 };

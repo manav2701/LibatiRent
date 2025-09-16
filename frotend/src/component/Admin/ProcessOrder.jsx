@@ -413,9 +413,9 @@ function ProcessOrder() {
                           key={idx}
                           item={item}
                           totalDiscount={
-                            `₹${(item.price * item.quantity * 20) / 100}` // random discount between 1 to 30
+                            `AED${(item.price * item.quantity * 20) / 100}` // random discount between 1 to 30
                           }
-                          totalPrice={`₹${item.price * item.quantity}`}
+                          totalPrice={`AED${item.price * item.quantity}`}
                         />
                       </Link>
                     ))}
@@ -500,7 +500,7 @@ function ProcessOrder() {
                   </div>
                   <p>
                     <b style={{ marginLeft: "-2rem" }}>
-                      ₹{order.totalPrice && order.totalPrice}
+                      AED{order.totalPrice && order.totalPrice}
                     </b>
                   </p>
                 </div>

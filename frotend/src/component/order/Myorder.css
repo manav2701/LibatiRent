@@ -3,54 +3,61 @@
   max-width: 100%;
   padding: 0 7vmax;
   box-sizing: border-box;
-  background-color: rgb(235, 235, 235);
-  /* position: fixed;
-  top: 0; */
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
   left: 0;
-  height : 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   margin-top: 10rem;
   overflow: scroll;
+  font-family: 'Poppins', sans-serif;
 }
 
 #myOrdersHeading {
   text-align: center;
-  font: 400 1.2vmax "Roboto";
-  padding: 0.5vmax;
+  font: 700 2rem 'Poppins', sans-serif;
+  padding: 1rem;
   box-sizing: border-box;
-  color: rgb(255, 255, 255);
-  transition: all 0.5s;
-  background-color: rgb(44, 44, 44);
+  color: white;
+  background: linear-gradient(135deg, #FF00BF, #120A8F);
+  border-radius: 15px;
+  margin-bottom: 2rem;
+  box-shadow: 0 15px 35px rgba(255, 0, 191, 0.3);
 }
 
 .myOrdersTable {
-  background-color: white;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 0, 191, 0.1);
+  overflow: hidden;
 }
 
 .myOrdersTable div {
-  font: 300 1vmax "Roboto";
-  color: rgba(0, 0, 0, 0.678);
+  font: 400 1rem 'Poppins', sans-serif;
+  color: #2c2c2c;
   border: none;
 }
 
 .myOrdersTable a {
-  color: rgba(0, 0, 0, 0.527);
-  transition: all 0.5s;
+  color: #FF00BF;
+  transition: all 0.3s ease;
+  font-weight: 500;
 }
 
 .myOrdersTable a:hover {
-  color: tomato;
+  color: #120A8F;
+  transform: translateY(-1px);
 }
 
 .MuiDataGrid-columnHeader {
-  background-color: tomato;
-  padding: 1vmax !important;
+  background: linear-gradient(135deg, #FF00BF, #120A8F) !important;
+  padding: 1rem !important;
 }
 
 .MuiDataGrid-columnHeader div {
-  color: rgb(255, 255, 255);
-  font: 500 1.1vmax "Roboto" !important;
+  color: white !important;
+  font: 600 1.1rem 'Poppins', sans-serif !important;
 }
 
 .MuiDataGrid-iconSeparator {

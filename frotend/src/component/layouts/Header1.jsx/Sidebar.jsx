@@ -86,19 +86,16 @@ const Sidebar = ({ handleSideBarMenu, isAuthenticated, user }) => {
         {isAuthenticated ? (
           <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
             <li className="sidebar-menu-item" onClick={logOutHandler}>
-            <ExitToAppIcon fontSize="large" />
-            <span className="sidebar-menu-item-text">Logout</span>
-          </li>
+              <ExitToAppIcon fontSize="large" />
+              <span className="sidebar-menu-item-text">Logout</span>
+            </li>
           </Link>
         ) : (
           <Link
             to="/login"
             style={{ color: "inherit", textDecoration: "none" }}
           >
-            <li
-              className="sidebar-menu-item"
-              style={{ textDecorationLine: "none", textDecoration: "none" }}
-            >
+            <li className="sidebar-menu-item">
               <LoginIcon fontSize="large" />
               <span className="sidebar-menu-item-text">Login</span>
             </li>

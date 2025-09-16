@@ -6,7 +6,7 @@ import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import PersonIcon from "@mui/icons-material/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import { Modal, Avatar } from "@material-ui/core";
+import { Modal } from "@material-ui/core";
 import { AccountCircle as AccountCircleIcon } from "@material-ui/icons";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import "./ProfileModel.css";
@@ -15,7 +15,7 @@ import { useAlert } from "react-alert";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../actions/userAction";
 
-const ProfileModal = ({ user, isAuthenticated }) => {
+const ProfileModal = ({ user, isAuthenticated, className }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -95,7 +95,7 @@ const ProfileModal = ({ user, isAuthenticated }) => {
 
   return (
     <>
-      <div className="profile-icon" onClick={handleOpen}>
+      <div className={`profile-icon${className ? ` ${className}` : ""}`} onClick={handleOpen}>
         <PersonIcon
           className={`icon smaller ${isOpen ? "active" : ""}`}
           fontSize="large"
@@ -117,12 +117,6 @@ const ProfileModal = ({ user, isAuthenticated }) => {
             ) : (
               <>
                 <div className="profile-info">
-                  <Avatar
-                    src={user.avatar.url}
-                    alt="User Avatar"
-                    className="avatar"
-                    style={{ width: "68px", height: "68px" }}
-                  />
                   <p className="user-id">
                     <strong>ID :</strong> {user._id.substring(0, 8)}
                   </p>

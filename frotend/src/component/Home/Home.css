@@ -1,36 +1,246 @@
-.trending_heading {
+/* Home Page Container */
+.Home_Page {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+}
 
+/* Hero Section Container - Takes full viewport */
+.heroSlider_Home {
+  height: 100vh;
+  width: 100%;
+  position: absolute; /* Changed from fixed to absolute */
+  top: 0;
+  left: 0;
+  z-index: 1;
+  overflow: hidden !important;
+}
+
+/* Content starts after hero section - Single continuous scroll */
+.content-wrapper {
+  position: relative;
+  top: 100vh; /* Start after the fixed hero */
+  background: var(--bg-primary);
+  z-index: 2; /* Ensure it's above hero */
+  min-height: 100vh; /* Full viewport height minimum */
+  margin: 0; /* Remove margin that causes extra space */
+  padding: 0; /* Remove padding that causes extra space */
+  overflow: visible !important;
+}
+
+/* All Equipment Section - adjust padding to account for image strip */
+.all-equipment-section {
+  background: var(--bg-primary);
+  color: #fff;
+  padding: 6rem 2rem 2rem 2rem; /* Reduced top padding since image strip is above */
+  margin: 0;
+  position: relative;
+  z-index: 3;
+  min-height: 100vh; /* Ensure full height */
+  overflow: visible !important;
+}
+
+.trending_heading {
   text-align: center;
-  margin-top: 2.7rem;
-  margin-bottom: 20px;
-  font-family: "Archivo", sans-serif;
+  margin-bottom: 4rem;
+  font-family: "Inter", "Archivo", sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  color: #fff;
+  position: relative;
+  padding: 0 2rem;
+  letter-spacing: -0.02em;
+  z-index: 10; /* Ensure above grid */
+  background: var(--bg-primary); /* Ensure underline is visible */
+  scroll-margin-top: 100px; /* Adjust this value to match your hero section height or header height */
+}
+
+.trending_heading::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(80px, 15vw, 120px);
+  height: 6px;
+  background: linear-gradient(90deg, #3b82f6, #ef4444);
+  border-radius: 3px;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  z-index: 11; /* Above heading */
+  display: block;
 }
 
 .trending-products {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.8rem;
-  margin: 0 1.8rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 0 auto;
+  padding: 2rem;
+  max-width: 1400px;
+  position: relative;
+  z-index: 1;
+  overflow: visible !important;
 }
 
-@media only screen and (min-width: 600px) {
-  .trending-products {
-    max-width: 960px;
-    margin: 0 auto;
+.trending-products::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 70% 70%, rgba(239, 68, 68, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.trending-products > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Remove this block if you want only one underline: */
+.all-equipment-title-underline {
+  display: none !important;
+}
+
+/* Smooth scrolling animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@media only screen and (min-width: 960px) {
+.trending-products > * {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Ensure proper scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* News ticker specific positioning */
+.news-ticker-overlay {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1050 !important; 
+  height: 3rem !important;
+  background: #f87171 !important;
+  overflow: hidden !important;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3) !important;
+
+  /* ✅ Fix blocking issue */
+  pointer-events: none !important;
+}
+
+.news-ticker-overlay * {
+  pointer-events: auto !important;
+}
+/* Responsive Design */
+@media (max-width: 1200px) {
   .trending-products {
-    max-width: 1200px;
-    margin: 0 auto;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
   }
 }
 
-@media only screen and (min-width: 1200px) {
+@media (max-width: 768px) {
+  .content-wrapper {
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .all-equipment-section {
+    padding: 4rem 1rem 2rem 1rem; /* Adjusted for mobile */
+    min-height: 100vh;
+  }
+  
+  .trending_heading {
+    font-size: clamp(2rem, 8vw, 3rem);
+    margin-bottom: 3rem;
+  }
+  
   .trending-products {
-    max-width: 1440px;
-    margin: 0 auto;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .news-ticker-overlay {
+    height: 2.5rem !important;
   }
 }
+
+@media (max-width: 480px) {
+  .all-equipment-section {
+    padding: 3rem 0.5rem 1rem 0.5rem; /* Adjusted for mobile */
+    min-height: 100vh;
+  }
+  
+  .trending_heading {
+    font-size: clamp(1.8rem, 8vw, 2.5rem);
+    margin-bottom: 2rem;
+  }
+  
+  .trending-products {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0.5rem;
+  }
+  
+  .news-ticker-overlay {
+    height: 2rem !important;
+  }
+}
+
+/* Remove the hidden news section */
+.news-section {
+  display: none;
+}
+
+/* Ensure no extra space after content */
+.Home_Page::after {
+  content: '';
+  display: block;
+  height: 0; /* No extra height */
+  clear: both;
+}
+
+/* Fix any extra margins on the last child */
+.all-equipment-section:last-child {
+  margin-bottom: 0 !important;
+  padding-bottom: 2rem !important;
+}
+
+/* Remove or override any overflow/height on these classes: */
+.all-equipment-section,
+.trending-products {
+  overflow: visible !important;
+  height: auto !important;
+  max-height: none !important;
+}
+.all-equipment-section,
+.trending-products {
+  overflow: visible !important;
+  height: auto !important;
+  max-height: none !important;
+}
+

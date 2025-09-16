@@ -146,39 +146,21 @@ sortBy: {
   },
   dialogContent: {
     height: "100%",
-    overflowY: "scroll",
+    overflow: "hidden", // Hide scrollbar
     "&::-webkit-scrollbar": {
-      width: "0.2em",
-      height: "0.2em",
-    },
-    "&::-webkit-scrollbar-thumb": {
-      backgroundColor: "white",
-      borderRadius: "10px",
-    },
-    "&::-webkit-scrollbar-track": {
-      backgroundColor: "white",
-      borderRadius: "10px",
+      display: "none", // Hide webkit scrollbar
     },
   },
   container: {
     display: "flex",
     flexDirection: "row",
-    overflowX: "scroll",
+    overflow: "hidden", // Hide horizontal scrollbar
     margin: 10,
     backgroundColor: "#f5f5f5",
     marginTop: "1rem",
     width: "100vw",
     "&::-webkit-scrollbar": {
-      width: "0.5em",
-      height: "0.5em",
-    },
-    "&::-webkit-scrollbar-thumb": {
-      backgroundColor: "#414141",
-      borderRadius: "10px",
-    },
-    "&::-webkit-scrollbar-track": {
-      backgroundColor: "white",
-      borderRadius: "10px",
+      display: "none", // Hide webkit scrollbar
     },
   },
 }));

@@ -6,6 +6,7 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GooglePlay from "../../../Image/Footer/google-play-black.svg";
 import AppStore from "../../../Image/Footer/app-store-black.svg";
+import LibatiLogo from "../../../Image/about/Libati.png";
 import "./Footer.css";
 const footMenu = [
   {
@@ -108,22 +109,22 @@ const footMenu = [
    {
      id: 1,
      icon: <FacebookIcon className="facebook_icon" fontSize="large" />,
-     path: "https://www.instagram.com/iam_nightbot/",
+     path: "https://www.instagram.com/",
    },
    {
      id: 2,
      icon: <TwitterIcon className="twitter_icon" fontSize="large" />,
-     path: "https://twitter.com/Iam_DEv22",
+     path: "https://x.com/trulycryptoguy",
    },
    {
      id: 3,
      icon: <InstagramIcon className="insta_icon" fontSize="large" />,
-     path: "https://www.instagram.com/cricket_weapon_store17",
+     path: "https://www.instagram.com/",
    },
    {
      id: 4,
      icon: <LinkedInIcon className="likedin_icon" fontSize="large" />,
-     path: "https://www.linkedin.com/in/iam-devesh/",
+     path: "https://www.linkedin.com/in/manav2701/",
    },
  ];
 
@@ -149,15 +150,15 @@ const Footer = () => {
               <div className="foot_logo">
                 <Link to="/" style={{ textDecoration: "none" }}>
                   <img
-                    src={require("../../../Image/Footer/logo.png")}
-                    alt="cricekt weapon logo"
+                    src={LibatiLogo}
+                    alt="Libati Sports Rental"
+                    className="foot_logo_image"
                   />
-                  <h1 className="Foot_heading">Cricket Weapon</h1>
                 </Link>
               </div>
 
               <div className="foot_subs">
-                <h5>Newslatter</h5>
+                <h5>Newsletter</h5>
                 <form onSubmit={handleSubmit} className="foot_form">
                   <input
                     type="email"
@@ -180,11 +181,11 @@ const Footer = () => {
               </div>
             </div>
 
-            <div class="foot_menu_container">
+            <div className="foot_menu_container">
               {footMenu.map((item) => {
                 const { id, title, menu } = item;
                 return (
-                  <div class="foot_menu foot2" key={id}>
+                  <div className="foot_menu foot2" key={id}>
                     <h4>{title}</h4>
                     <ul>
                       {menu.map((item) => {

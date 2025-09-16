@@ -1,21 +1,27 @@
 .confirmOrderPage {
   height: 100vh;
-  background-color: white;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
   display: grid;
   grid-template-columns: 6fr 3fr;
+  font-family: 'Poppins', sans-serif;
 }
 .confirmOrderPage > div:last-child {
-  border-left: 1px solid rgba(0, 0, 0, 0.247);
+  border-left: 1px solid rgba(255, 0, 191, 0.2);
 }
 
 .confirmshippingArea {
   padding: 5vmax;
   padding-bottom: 0%;
+  background: white;
+  border-radius: 20px 0 0 20px;
+  margin: 2rem 0 2rem 2rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
 
 .confirmshippingArea > p {
-  font: 400 1.8vmax "Roboto";
+  font: 600 1.8rem 'Poppins', sans-serif;
+  color: #FF00BF;
 }
 
 .confirmshippingAreaBox,
@@ -105,19 +111,23 @@ confirmCartItems {
 }
 
 .orderSummary > button {
-  background-color: tomato;
+  background: linear-gradient(135deg, #FF00BF, #120A8F);
   color: white;
   width: 100%;
-  padding: 1vmax;
+  padding: 15px;
   border: none;
   margin: auto;
   cursor: pointer;
-  transition: 0.5s;
-  font: 400 1vmax "Roboto";
+  transition: all 0.3s ease;
+  font: 600 1rem 'Poppins', sans-serif;
+  border-radius: 50px;
+  box-shadow: 0 8px 25px rgba(255, 0, 191, 0.3);
 }
 
 .orderSummary > button:hover {
-  background-color: rgb(192, 71, 50);
+  background: #120A8F;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(18, 10, 143, 0.4);
 }
 
 @media screen and (max-width: 600px) {

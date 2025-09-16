@@ -19,7 +19,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import useStyles from "./LoginFromStyle";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 
 function Signup() {
   const classes = useStyles();
@@ -31,8 +30,6 @@ function Signup() {
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [isValidName, setIsValidName] = useState(true);
   const [isValidPassword, setIsValidPassword] = useState(true);
-  const [avatar, setAvatar] = useState("");
-  const [avatarPreview, setAvatarPreview] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [areCheckboxesChecked, setAreCheckboxesChecked] = useState({
@@ -56,7 +53,7 @@ function Signup() {
       alert.success("User Registered Successfully");
       history.push("/account");
     }
-  }, [dispatch, isAuthenticated, loading, error, alert , history]);
+  }, [dispatch, isAuthenticated, loading, error, alert, history]);
 
   const handleEmailChange = (event) => {
     const newEmail = event.target.value;
@@ -66,29 +63,17 @@ function Signup() {
     );
   };
 
-  const handleAvatarChange = (event) => {
-
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        setAvatarPreview(reader.result);
-        setAvatar(reader.result);
-    
-      };
-    }
-  };
-
   const handleNameChange = (event) => {
     const newName = event.target.value;
     setName(newName);
     setIsValidName(newName.length >= 4 && newName.length <= 20);
   };
+  
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
-      setIsValidPassword(event.target.value.length >= 8);
+    setIsValidPassword(event.target.value.length >= 8);
   };
+  
   const handleConfirmPasswordChange = (event) => {
     setconfirmPassword(event.target.value);
   };
@@ -116,9 +101,8 @@ function Signup() {
   );
 
   function handleSignUpSubmit(e) {
-      setLoading(true);
+    setLoading(true);
     e.preventDefault();
-  
 
     if (password !== confirmPassword) {
       alert.error("Password and Confirm Password do not match");
@@ -126,13 +110,13 @@ function Signup() {
       return;
     }
 
-    const formData = new FormData();
-    formData.set("name", name);
-    formData.set("email", email);
-    formData.set("password", password);
-    formData.set("avatar", avatar);
+    const userData = {
+      name,
+      email,
+      password,
+    };
 
-    dispatch(signUp(formData));
+    dispatch(signUp(userData));
     setLoading(false);
   }
 
@@ -148,7 +132,7 @@ function Signup() {
               <LockOutlinedIcon />
             </Avatar>
             <Typography variant="h5" component="h1" className={classes.heading}>
-              Sign Up for an Account ! 
+              Sign Up for an Account !
             </Typography>
             <TextField
               label="Name"
@@ -159,7 +143,9 @@ function Signup() {
               onChange={handleNameChange}
               error={!isValidName && name !== ""}
               helperText={
-                !isValidName && name !== "" ? "Name must be between 4 and 20 characters." : ""
+                !isValidName && name !== ""
+                  ? "Name must be between 4 and 20 characters."
+                  : ""
               }
             />
 
@@ -184,7 +170,11 @@ function Signup() {
               fullWidth
               className={`${classes.passwordInput} ${classes.textField}`}
               error={!isValidPassword && password !== ""}
-               helperText={ !isValidPassword && password !== "" ? "Password must be at least 8 characters." : ""}
+              helperText={
+                !isValidPassword && password !== ""
+                  ? "Password must be at least 8 characters."
+                  : ""
+              }
               InputProps={{
                 endAdornment: (
                   <Button
@@ -220,36 +210,10 @@ function Signup() {
               onChange={handleConfirmPasswordChange}
             />
 
-            <div className={classes.root}>
-              <Avatar
-                alt="Avatar Preview"
-                src={avatarPreview}
-                className={classes.avatar2}
-              />
-              <input
-                accept="image/*"
-                className={classes.input}
-                id="avatar-input"
-                type="file"
-                onChange={handleAvatarChange}
-              />
-              <label htmlFor="avatar-input">
-                <Button
-                  variant="contained"
-                  color="default"
-                  startIcon={<CloudUploadIcon style={{ color: "#FFFFFF" }} />}
-                  component="span"
-                  className={classes.uploadAvatarButton}
-                >
-                  <p className={classes.uploadAvatarText}>Upload Avatar</p>
-                </Button>
-              </label>
-            </div>
-
             <Grid
               container
               className={classes.gridcheckbox}
-              justify="flex-start"
+              justifyContent="flex-start"
               alignItems="center"
             >
               <Grid item>
@@ -276,9 +240,9 @@ function Signup() {
               variant="body2"
               className={classes.termsAndConditionsText}
             >
-              I acknowledge Cricket Weapon will use my information in accordance
+              I acknowledge Libati will use my information in accordance
               with its
-              <Link href="#" className={classes.privacyText}>
+              <Link to="/policy/privacy" className={classes.privacyText}>
                 Privacy Policy.
               </Link>
             </Typography>
@@ -303,6 +267,20 @@ function Signup() {
                 Login
               </Link>
             </Typography>
+            <button
+              className={classes.guestLink}
+              onClick={() => {
+                sessionStorage.removeItem("user");
+                sessionStorage.removeItem("token");
+                localStorage.setItem("guestCheckout", "true");
+                setTimeout(() => {
+                  window.location.href = "/shipping";
+                }, 50);
+              }}
+              type="button"
+            >
+              Continue as Guest
+            </button>
           </form>
         </div>
       )}

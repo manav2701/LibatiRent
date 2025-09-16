@@ -1,29 +1,26 @@
 const nodeMailer = require("nodemailer");
-// options are pass as arg from userController
-const sendEmail = async (options) => {
 
+const sendEmail = async (options) => {
     const transporter = nodeMailer.createTransport({
-          //Simple Mail Transfer Protocol (SMTP) (write any thing but that make sense. its env fi)
-        host: process.env.SMTP_HOST, // "smtp.gmail.com"
-        port: process.env.SMTP_PORT,  // 465,
-        service: process.env.SMTP_SERVICE, // gmail
+        host: process.env.SMTP_HOST, // e.g., "smtp.gmail.com"
+        port: process.env.SMTP_PORT, // e.g., 465
+        service: process.env.SMTP_SERVICE, // e.g., "gmail"
+        secure: true, // use SSL if using port 465
         auth: {
-            // this our email and pass wich one we use for sending mail
-            user: process.env.SMTP_MAIL,
-            pass: process.env.SMTP_PASSWORD,
+            user: process.env.SMTP_MAIL,       // your email
+            pass: process.env.SMTP_PASS,       // your app password
         },
     });
 
-
     const mailOptions = {
-        from: process.env.SMPT_MAIL,
+        from: process.env.SMTP_MAIL,
         to: options.email,
         subject: options.subject,
-        text: options.message, 
+        text: options.message,
     };
 
     await transporter.sendMail(mailOptions);
+    console.log("Email sent to:", options.email); // Debug log
+};
 
-   
-}
 module.exports = sendEmail;

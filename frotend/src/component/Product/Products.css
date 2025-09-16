@@ -1,307 +1,626 @@
-.productPage{
+/* filepath: c:\Users\Manav\Desktop\Coding\rent\mern-ecommerce-CricketWeapon-Store\frotend\src\component\Product\Products.css */
+
+/* Compact Rental Configuration Bar */
+.rental-compact-bar {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  padding: 20px;
+  margin-top: 80px; /* Add space to avoid navbar overlay */
+  position: relative;
+  z-index: 1;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 8rem;
-
-}
-.prodcutPageTop{
-  display: flex;
-width: auto;
-gap: 1rem;
-  justify-content: space-around;
-
-  margin-bottom: 1rem;
-
-}
-
-
-
-
-.products {
- display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-height: fit-content;
-  width: 80%;
-  
+  align-items: center;
+  gap: 16px;
 }
 
-.products1{
+.compact-rental-button {
+  background: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  border-radius: 50px !important;
+  padding: 12px 32px !important;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1) !important;
+  transition: all 0.3s ease !important;
+  text-transform: none !important;
+  font-size: 1rem !important;
+  min-width: 400px !important;
+}
+
+.compact-rental-button:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+.compact-rental-text {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60vw;
-  
-  margin: 1rem 0;
-
-}
-.filterBox{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-  width: 20%;
- margin: 1rem 0 0 .8rem;
-  background-color: white;
-  border-radius: 5px;
-  box-sizing: border-box;
-  height: fit-content;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.329);
-
- 
+  gap: 4px;
 }
 
-.priceFilter{
-  display: flex;
-  flex-direction: column;
-
-  align-items: center;
-
+.duration-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4CAF50;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.priceSlider{
-  width: 90%;
-
-}
-.priceSlider .css-187mznn-MuiSlider-root {
-  height: 3px !important;
-    color: #414141 !important;
-}
-
-
-.priceSelector{
-  display: flex;
-gap: 10px;
-  align-items: center;
-  width: 90%;
-  margin: 10px 0;
-}
-
-.priceOption{
-  width: 90%;
-  height: 2rem;
-  
-
-  
-}
-
-
-
-.toText {
-   font-size: 16px;
-    font-weight: 400;
-    color: #414141;
-  
-}
-.filter_divider{
-  width: 100%;
-  height: .8px;
-  margin: 1.5rem 0;
-  background-color: #d7d5d2d4;
-}
-.menu_item{
-  color: white !important;
-box-shadow: rgb(255, 255, 255) !important;
-
-}
-
-.categoriesFilter{
-  width: 90%;
-}
-.categoryBox{
-  display: flex;
-  flex-direction: column;
-  align-items:  flex-start;
-  width: 90%;
-
-}
-.category-link {
- display: flex;
-  align-items: center;
-  list-style: none;
-  color: rgba(0, 0, 0, 0.61);
-  font: 400 0.8vmax "Roboto";
-  margin: 0.4vmax;
-  cursor: pointer;
- 
-}
-.category-label{
-  font-size: 16px;
+.date-time-display {
+  font-size: 1rem;
   font-weight: 500;
+  color: #2c3e50;
+}
+
+/* Category Tabs */
+.category-tabs {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px;
+  overflow-x: hidden !important; /* Hide horizontal scrollbar */
+  margin-top: 0; /* Remove any extra margin since rental bar already has spacing */
+}
+
+.category-tab {
+  border-radius: 25px !important;
+  padding: 10px 20px !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  min-width: 140px !important;
+}
+
+.category-tab.active {
+  background: var(--accent-blue) !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3) !important;
+}
+
+.category-tab:not(.active) {
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-secondary) !important;
+}
+
+.category-tab:not(.active):hover {
+  background: var(--bg-primary) !important;
+  border-color: var(--accent-blue) !important;
+}
+
+.tab-icon {
+  margin-right: 8px;
+  font-size: 1.2rem;
+}
+
+/* Rental Configuration Modal */
+.rental-modal {
+  position: fixed;              /* fixed relative to viewport */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(960px, 92%);
+  max-height: 90vh;
+  overflow: auto;               /* if modal content is long, it will scroll inside */
+  z-index: 1400;                /* above the backdrop */
+  outline: none;
+  padding: 0;
+  border-radius: 12px;
+}
+
+/* inside card spacing */
+.rental-modal-card {
+  background: #0f1724;
+  color: #e6f6ff;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+}
+
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.modal-title {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  font-weight: 700 !important;
+  color: #2c3e50 !important;
+}
+
+.modal-title-icon {
+  color: #4CAF50;
+  font-size: 1.5rem !important;
+}
+
+.close-button {
+  color: #6c757d !important;
+}
+
+.close-button:hover {
+  color: #dc3545 !important;
+}
+
+.rental-form {
+  margin-top: 16px;
+}
+
+.field-label {
+  font-weight: 600 !important;
+  color: #495057 !important;
+  margin-bottom: 8px !important;
+  display: block;
+}
+
+.rental-select,
+.rental-input {
+  border-radius: 8px !important;
+}
+
+.rental-select .MuiOutlinedInput-root,
+.rental-input .MuiOutlinedInput-root {
+  border-radius: 8px !important;
+}
+
+.rental-select:hover .MuiOutlinedInput-root,
+.rental-input:hover .MuiOutlinedInput-root {
+  border-color: #4CAF50 !important;
+}
+
+.apply-rental-button {
+  background: linear-gradient(135deg, #3b82f6 0%, #ef4444 100%) !important;
+  color: white !important;
+  border-radius: 12px !important;
+  padding: 16px !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  text-transform: none !important;
+  margin-top: 24px !important;
+}
+.apply-rental-button:hover {
+  background: var(--accent-blue-hover) !important;
+  box-shadow: 0 8px 25px var(--accent-blue) !important;
+}
+
+/* Products Layout */
+.products-layout {
+  display: flex;
+  max-width: 1400px;
+  margin: 0 auto;
+  gap: 24px;
+  padding: 24px;
+  overflow: visible !important;
+}
+
+.sidebar {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 24px;
+  height: fit-content;
+  box-shadow: 0 2px 12px rgba(59, 130, 246, 0.08);
+  border: 1px solid var(--border-color);
+  overflow: visible !important;
+}
+
+.products-main {
+  flex: 1;
+  min-width: 0;
+  overflow: visible !important;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+  overflow: visible !important;
+}
+
+/* Filter Sections */
+.filter-section {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.filter-section:last-child {
+  border-bottom: none;
+  margin-bottom: 24px;
+}
+
+.filter-title {
+  color: var(--text-primary) !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 16px !important;
+}
+
+/* Price Filter */
+.price-slider {
+  margin: 16px 0 24px 0;
+}
+
+.price-range-slider {
+  color: var(--accent-blue) !important;
+}
+.price-range-slider .MuiSlider-thumb {
+  background: var(--accent-blue) !important;
+}
+.price-range-slider .MuiSlider-track {
+  background: var(--accent-blue) !important;
+}
+.price-range-slider .MuiSlider-rail {
+  background: var(--border-color) !important;
+}
+
+.price-inputs {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.price-select {
+  flex: 1;
+  border-radius: 8px !important;
+}
+
+.price-separator {
+  font-weight: 600;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+/* Category Checkboxes */
+.category-checkboxes {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.category-label {
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.category-label:hover {
+  background: #f8f9fa;
 }
 
 .category-checkbox {
-  width: 16px;
-  height: 16px;
+  accent-color: var(--accent-blue);
+  margin-right: 12px !important;
 }
 
-.category-checkbox:checked + .category-label::before {
-  background-color: #414141;
-}
-
-
-.ratingsFilter{
+/* Ratings Filter */
+.ratings-group {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-.ratingsBox{
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 80%;
-}
-.paginationBox {
-  display: flex;
-  justify-content: center;
-
+  gap: 8px;
 }
 
-.pagination {
-  display: flex;
-  justify-content: center;
-  padding: 2rem 0 2rem 0; 
-
-}
-.page-item {
-  background-color: rgb(255, 255, 255);
-  list-style: none;
-  border: 1px solid rgba(0, 0, 0, 0.178);
-  padding: 1vmax 1.5vmax;
-  transition: all 0.3s;
-  cursor: pointer;
+.ratings-group .MuiFormControlLabel-root {
+  margin: 0 !important;
+  padding: 4px 0;
 }
 
-.page-item:first-child {
-  border-radius: 5px 0 0 5px;
+.ratings-group .MuiRadio-root {
+  color: var(--accent-blue) !important;
+}
+.ratings-group .MuiRadio-root.Mui-checked {
+  color: var(--accent-blue) !important;
 }
 
-.page-item:last-child {
-  border-radius: 0 5px 5px 0;
+/* Reset Button */
+.reset-filters-button {
+  border-color: var(--accent-blue) !important;
+  color: var(--accent-blue) !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
 }
-.page-link {
-  text-decoration: none;
-  font: 300 .9vmax "Roboto";
-  color: rgb(2, 2, 2);
-  transition: all 0.3s;
-}
-
-.page-item:hover {
-  background-color: #414141;
-}
-
-.page-item:hover .page-link {
-  color: rgb(234, 10, 10);
+.reset-filters-button:hover {
+  background: var(--accent-blue) !important;
+  color: white !important;
 }
 
-.pageItemActive {
-  background-color: #ed1c24;
-}
-
-.pageLinkActive {
-  color: white;
-}
-
-
-.css-187mznn-MuiSlider-root {
-  
-    color: #170f05 !important;
-   
-    height: 1.2px !important;
-   
-}
-.css-eg0mwd-MuiSlider-thumb {
-  width: 10px    !important;
-  height: 10px      !important;
-}
-
-.css-ahj2mt-MuiTypography-root{
+/* Empty State */
+.empty-state {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(59, 130, 246, 0.08);
   text-align: center;
+  padding: 80px 24px;
+  margin: 24px;
 }
 
-
-.categoryBox {
-  padding: 0%;
+.empty-icon {
+  font-size: 4rem !important;
+  color: #6c757d;
+  margin-bottom: 24px;
 }
 
-
-.category-link:hover {
-  color: tomato;
+.empty-title {
+  color: #2c3e50 !important;
+  font-weight: 700 !important;
+  margin-bottom: 12px !important;
 }
 
-.css-1t2bqnt {
-  color: #170f05 !important;
+.empty-text {
+  color: #6c757d !important;
+  margin-bottom: 32px !important;
 }
 
-.css-exkjcx {
-  color: #414141 !important;
+.show-all-button {
+  background: #4CAF50 !important;
+  color: white !important;
+  border-radius: 8px !important;
+  padding: 12px 32px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
 }
 
-.filterBox > fieldset {
-  border: 1px solid rgba(0, 0, 0, 0.329);
+/* Pagination */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid #e9ecef;
 }
 
-@media screen and (max-width: 1100px) {
-  .filterBox {
-    width: 30vmax;
+.pagination-container .pagination {
+  display: flex;
+  gap: 8px;
+}
+
+.page-item {
+  list-style: none;
+}
+
+.page-link {
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 10px 16px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+.page-link:hover {
+  background: var(--accent-blue);
+  color: white;
+  border-color: var(--accent-blue);
+}
+.page-item-active .page-link {
+  background: var(--accent-blue);
+  color: white;
+  border-color: var(--accent-blue);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .rental-compact-bar {
+    margin-top: 70px; /* Slightly less margin for tablets */
+    padding: 16px;
   }
-  .page-link {
-    font: 300 1.2vmax "Roboto";
-  }
-  .products1 {
-    width: 55vw;
-  }
-  .category-link {
-    font: 400 1.3vmax "Roboto";
-  }
-} 
-
   
-@media screen and (max-width: 800px) {
-  .filterBox {
-    width: 40vmax;
+  .products-layout {
+    flex-direction: column;
   }
-  .products1 {
-    width: 45vw;
-  }
-
-  .page-link {
-    font: 300 1.5vmax "Roboto";
-  }
-  .category-link {
-    font: 400 1.6vmax "Roboto";
-  }
-}
- 
   
-
-@media screen and (max-width: 600px) {
-.prodcutPageTop{
-  flex-direction: column-reverse;
-  align-items: center;
-  margin-top: 10px;
-  
-
-}
-.filterBox{
-  width: 60%;
-  margin: 1rem 0 0 0;
-}
-
-.products{
-  width: 100%;
-  margin: 1rem 0 0 0;
-}
-.products1 {
-  width: 100%;
-  margin: 1rem 0 0 0;
-
+  .sidebar {
+    width: 100%;
+    order: 2;
   }
-
-
+  
+  .products-main {
+    order: 1;
+  }
+  
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
 }
+
+@media (max-width: 768px) {
+  .rental-compact-bar {
+    margin-top: 60px; /* Adjust for mobile navbar height */
+    padding: 16px;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .compact-rental-button {
+    min-width: 300px !important;
+    padding: 10px 24px !important;
+  }
+  
+  .compact-rental-text {
+    gap: 2px;
+  }
+  
+  .duration-label {
+    font-size: 0.75rem;
+  }
+  
+  .date-time-display {
+    font-size: 0.9rem;
+  }
+  
+  .category-tabs {
+    padding: 16px;
+    gap: 8px;
+  }
+  
+  .category-tab {
+    min-width: 120px !important;
+    padding: 8px 16px !important;
+    font-size: 0.9rem !important;
+  }
+  
+  .rental-modal {
+    width: 95%;
+    margin: 0 auto;
+  }
+  
+  .products-layout {
+    padding: 16px;
+    gap: 16px;
+  }
+  
+  .sidebar {
+    padding: 20px;
+  }
+  
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rental-compact-bar {
+    margin-top: 55px; /* Fine-tune for small mobile screens */
+    padding: 12px;
+  }
+  
+  .compact-rental-button {
+    min-width: 280px !important;
+    padding: 8px 20px !important;
+  }
+  
+  .category-tabs {
+    flex-wrap: nowrap;
+    overflow-x: hidden !important; /* Keep hidden */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .category-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .category-tab {
+    flex-shrink: 0;
+    min-width: 100px !important;
+    font-size: 0.8rem !important;
+  }
+  
+  .price-inputs {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .price-separator {
+    order: 1;
+  }
+}
+
+/* Animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.products-grid > * {
+  animation: slideInUp 0.4s ease-out;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+}
+
+.filter-section {
+  animation: slideInUp 0.3s ease-out;
+}
+
+/* Focus States */
+.rental-select:focus-within,
+.rental-input:focus-within {
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+}
+
+.category-checkbox:focus {
+  outline: 2px solid #4CAF50;
+  outline-offset: 2px;
+}
+
+/* Loading States */
+.compact-rental-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.apply-rental-button:disabled {
+  background: #6c757d !important;
+  cursor: not-allowed;
+}
+
+/* Hover Effects */
+.filter-section:hover {
+  background: rgba(76, 175, 80, 0.02);
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.sidebar:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  transition: box-shadow 0.3s ease;
+}
+:\Users\Manav\Desktop\Coding\rent\mern-ecommerce-CricketWeapon-Store\frotend\src\component\Product\Products.css */
+
+/* Search Results Info */
+.search-results-info {
+  background: var(--bg-secondary);
+  padding: 20px 24px;
+  margin: 0 24px 24px 24px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+  margin-top: 0; /* Ensure no extra spacing */
+}
+
+.search-results-text {
+  color: var(--text-primary) !important;
+  font-weight: 600 !important;
+  margin-bottom: 8px !important;
+}
+
+.search-suggestions {
+  color: var(--text-secondary) !important;
+  margin: 0 !important;
+}
+
+/* Filter subsections */
+.filter-subsection {
+  margin-bottom: 16px;
+}
+
+.filter-subsection:last-child {
+  margin-bottom: 0;
+}
+
+.filter-subsection .MuiSelect-root {
+  margin-top: 8px;
+}
+
+/* ...existing code... */

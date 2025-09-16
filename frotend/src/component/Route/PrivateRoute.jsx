@@ -13,9 +13,16 @@ function PrivateRoute({ isAdmin, component: Component, ...rest }) {
     dispatch(load_UserProfile());
   }, [dispatch]);
 
-
   if (loading) {
-    return <CricketBallLoader />; 
+    return <CricketBallLoader />;
+  }
+
+  // Allow guest access to /shipping if guestCheckout flag is set
+  if (
+    rest.path === "/shipping" &&
+    localStorage.getItem("guestCheckout") === "true"
+  ) {
+    return <Route {...rest} render={(props) => <Component {...props} />} />;
   }
 
   // If the user data failed to load or the user is not authenticated, redirect to the login page

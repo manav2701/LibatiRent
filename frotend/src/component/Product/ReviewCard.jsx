@@ -112,7 +112,7 @@ const ReviewCard = ({ product }) => {
           <Select
             value={sortValue ? sortValue : "highest"}
             className={classes.select}
-            onClick={handleSortChange}
+            onChange={handleSortChange}
             MenuProps={{
               anchorOrigin: { vertical: "bottom", horizontal: "left" },
               getContentAnchorEl: null,

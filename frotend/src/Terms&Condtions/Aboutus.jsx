@@ -2,97 +2,142 @@ import React from "react";
 import { Typography, Container, Grid, Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import MetaData from "../component/layouts/MataData/MataData";
-import TermsImage from "../Image/about/tc.jpg";
+import LibatiLogo from "../Image/about/Libati.png";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+
 const useStyles = makeStyles((theme) => ({
   about_us: {
     paddingTop: "8rem",
     paddingBottom: "4rem",
-    backgroundColor: "white !important",
+    background: "linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)",
     width: "100%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    minHeight: "100vh",
   },
 
   container_12: {
-    padding: "2rem",
+    padding: "3rem 2rem",
     textAlign: "center",
-
-    backgroundColor: "white !important",
+    background: "white",
     maxWidth: "100%",
+    borderRadius: "20px",
+    boxShadow: "0 20px 60px rgba(0, 0, 0, 0.1)",
+    margin: "2rem 0",
+    border: "1px solid rgba(255, 0, 191, 0.1)",
   },
+
   image_about: {
     width: "100%",
     height: "auto",
-    marginTop: "3rem",
+    marginTop: "2rem",
     marginBottom: "2rem",
+    borderRadius: "15px",
+    boxShadow: "0 15px 40px rgba(0, 0, 0, 0.1)",
+    transition: "transform 0.3s ease",
+    "&:hover": {
+      transform: "scale(1.02)",
+    },
   },
-  title_about: {
-    color: "#414141",
-    fontSize: "14px",
-    padding: "2rem 1rem 2rem",
-    fontFamily: "Roboto",
-    fontWeight: "500 !important",
-  },
-  heading12_about: {
-    fontSize: "1rem",
-    padding: "2rem 1rem 2rem",
-    fontWeight: "400 !important",
-    color: "#414141",
-    textAlign: "center",
-  },
-  introText_about: {
-    maxWidth: "800px",
 
-    lineHeight: "1.5",
-    margin: "1.5rem 0",
-    color: "#292929",
-    fontSize: "1.2rem",
-    fontWeight: "400 !important",
-    textAlign: "justify",
-    padding: "0.8rem 1rem",
+  title_about: {
+    color: "#1e3a8a !important",
+    fontSize: "36px !important",
+    padding: "2rem 1rem",
+    fontFamily: "'Inter', 'Roboto', sans-serif !important",
+    fontWeight: "700 !important",
+    position: "relative",
+    "&::after": {
+      content: '""',
+      position: "absolute",
+      bottom: "10px",
+      left: "50%",
+      transform: "translateX(-50%)",
+      width: "100px",
+      height: "4px",
+      background: "linear-gradient(90deg, #1e3a8a, #3b82f6)",
+      borderRadius: "2px",
+    },
   },
-  infoText_about: {
-    lineHeight: "1.5",
+
+  heading12_about: {
+    fontSize: "28px !important",
+    padding: "2rem 1rem",
+    fontWeight: "600 !important",
+    color: "#1e3a8a !important",
+    textAlign: "center",
+    fontFamily: "'Inter', 'Roboto', sans-serif !important",
+  },
+
+  introText_about: {
+    maxWidth: "900px",
+    lineHeight: "1.8",
     margin: "2rem 0",
-    color: "#292929",
-    fontSize: "1rem",
+    color: "#2c2c2c !important",
+    fontSize: "18px !important",
     fontWeight: "400 !important",
     textAlign: "justify",
-    padding: "0.8rem 1rem",
+    padding: "1rem 2rem",
+    fontFamily: "'Inter', 'Roboto', sans-serif !important",
   },
+
+  infoText_about: {
+    lineHeight: "1.8",
+    margin: "2rem 0",
+    color: "#444 !important",
+    fontSize: "16px !important",
+    fontWeight: "400 !important",
+    textAlign: "justify",
+    padding: "1rem 2rem",
+    fontFamily: "'Inter', 'Roboto', sans-serif !important",
+  },
+
   buttonContainer_about: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    padding: "1rem 0",
+    padding: "2rem 0",
     width: "100%",
-    marginTop: "1rem",
+    marginTop: "2rem",
+    gap: "1rem",
+    flexWrap: "wrap",
   },
+
   button1_about: {
-    backgroundColor: "#000000 !important",
+    background: "linear-gradient(135deg, #1e3a8a, #3b82f6) !important",
     color: "white !important",
-    width: "fit-content !important",
-    padding: "0.8rem 2rem   !important",
-    marginLeft: "3.3rem !important",
-    borderRadius: "5px !important",
+    padding: "15px 30px !important",
+    borderRadius: "50px !important",
+    fontWeight: "600 !important",
+    fontSize: "16px !important",
+    textTransform: "none !important",
+    boxShadow: "0 10px 30px rgba(30, 58, 138, 0.3) !important",
+    transition: "all 0.3s ease !important",
     "&:hover": {
-      backgroundColor: "#ed1c24 !important",
-      color: "white !important",
+      background: "#3b82f6 !important",
+      transform: "translateY(-2px)",
+      boxShadow: "0 15px 40px rgba(59, 130, 246, 0.4) !important",
     },
   },
+
   button2_about: {
-    backgroundColor: "#292929 !important",
-    color: "white   !important",
-    width: "fit-content     !important",
-    padding: "0.8rem 2rem   !important",
-    marginLeft: "1.3rem !important",
-    borderRadius: "5px !important",
+    background: "transparent !important",
+    color: "#1e3a8a !important",
+    border: "2px solid #1e3a8a !important",
+    padding: "13px 28px !important",
+    borderRadius: "50px !important",
+    fontWeight: "600 !important",
+    fontSize: "16px !important",
+    textTransform: "none !important",
+    transition: "all 0.3s ease !important",
     "&:hover": {
-      backgroundColor: "#ed1c24 !important",
+      background: "#1e3a8a !important",
       color: "white !important",
+      transform: "translateY(-2px)",
+      boxShadow: "0 15px 40px rgba(30, 58, 138, 0.4) !important",
     },
   },
 }));
@@ -100,126 +145,166 @@ const useStyles = makeStyles((theme) => ({
 const About_UsPage = () => {
   const classes = useStyles();
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
+  };
+
   return (
     <>
       <div className={classes.about_us}>
-        <MetaData title={"About Us"} />
-        <Container className={classes.container_12}>
-          <Grid container spacing={4} justifyContent="center">
-            <Grid item xs={12} sm={6}>
-              <img
-                src={TermsImage}
-                alt="CricketWeapon"
-                className={classes.image_about}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Typography
-                variant="h2"
-                component="h1"
-                className={classes.title_about}
-              >
-                About Us
-              </Typography>
-              <Typography variant="body1" className={classes.introText_about}>
-                CricketWeapon store is an online cricket sports selling startup
-                started in 2019. We have served more than 20,000 customers
-                through social media and other platforms. We are proud to offer
-                our own products under the brand name CW, also known as "Cricket
-                Weapon".
-              </Typography>
-              <Typography variant="body1" className={classes.introText_about}>
-                CricketWeapon was founded by Lokesh Samant, a talented cricket
-                player who has represented the Under 16 and Under 19 teams.
-                Lokesh started this business to support his expenses and
-                received an overwhelming response. He has sold cricket equipment
-                to more than 20,000 customers till date. Now, he aims to expand
-                his business to an international level by launching his own
-                website and introducing new and genuine cricket products at
-                competitive prices.
-              </Typography>
-            </Grid>
-          </Grid>
-        </Container>
-        <Container className={classes.container_12}>
-          <Typography
-            variant="h3"
-            component="h1"
-            className={classes.heading12_about}
-          >
-            Who We Are
-          </Typography>
-          <Typography variant="body1" className={classes.infoText_about}>
-            CricketWeapon is dedicated to providing high-quality cricket
-            equipment and accessories to cricket enthusiasts worldwide. Our
-            mission is to empower cricketers with the best tools to enhance
-            their performance on the field. With a focus on innovation,
-            craftsmanship, and customer satisfaction, we have become a trusted
-            brand in the cricket community.
-          </Typography>
-          <Typography variant="body1" className={classes.infoText_about}>
-            Since our inception in 2019, we have built a strong customer base
-            and expanded our product range to cater to the diverse needs of
-            players at every level. We take pride in offering genuine cricket
-            products that are carefully curated and tested for quality and
-            performance. Our team of experts works closely with manufacturers to
-            ensure that our customers receive top-notch products.
-          </Typography>
-          <Typography variant="body1" className={classes.infoText_about}>
-            At CricketWeapon, we believe in fostering long-term relationships
-            with our customers. We provide excellent customer service and strive
-            to exceed expectations at every step. We are committed to delivering
-            a seamless online shopping experience and ensuring customer
-            satisfaction. Join us on this exciting journey as we continue to
-            grow and expand our reach in the world of cricket.
-          </Typography>
-        </Container>
-        <Container className={classes.container_12}>
-          <Typography
-            variant="h3"
-            component="h1"
-            className={classes.heading12_about}
-          >
-            Our Mission
-          </Typography>
-          <Typography variant="body1" className={classes.infoText_about}>
-            CricketWeapon is driven by the mission to provide high-quality
-            cricket equipment and accessories at affordable prices. We aim to
-            make cricket accessible to players worldwide and support their
-            passion for the sport. Our mission is to offer a wide range of
-            cricket equipment, including bats, balls, protective gear, and
-            accessories, that meet the highest standards of quality and
-            performance.
-          </Typography>
-          <Typography variant="body1" className={classes.infoText_about}>
-            We are committed to continuously innovating and improving our
-            product range to meet the evolving needs of cricketers. Our team of
-            experts works closely with manufacturers and conducts rigorous
-            quality testing to ensure that every product we offer delivers
-            exceptional performance on the field. We believe that every player
-            deserves the best tools to enhance their skills and achieve their
-            cricketing goals.
-          </Typography>
+        <MetaData title={"About Libati - Sports Rental Platform"} />
 
-          <div className={classes.buttonContainer_about}>
-            <Link
-              to="/products"
-              style={{ textDecoration: "none", color: "none" }}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <Container className={classes.container_12}>
+            <Grid container spacing={4} justifyContent="center" alignItems="center">
+              <Grid item xs={12} md={6}>
+                <motion.img
+                  variants={itemVariants}
+                  src={LibatiLogo}
+                  alt="Libati Sports Rental"
+                  className={classes.image_about}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <motion.div variants={itemVariants}>
+                  <Typography
+                    variant="h2"
+                    component="h1"
+                    className={classes.title_about}
+                  >
+                    About Libati
+                  </Typography>
+                  <Typography variant="body1" className={classes.introText_about}>
+                    Libati is a revolutionary sports rental platform specializing in tennis and padel equipment.
+                    Founded in 2019, we've transformed the way athletes access premium sports gear by making
+                    high-quality equipment affordable and accessible through our innovative rental service.
+                  </Typography>
+                  <Typography variant="body1" className={classes.introText_about}>
+                    Our mission is simple: democratize access to professional-grade tennis and padel equipment.
+                    Whether you're a weekend warrior or a competitive athlete, Libati ensures you have access
+                    to the best gear without the hefty price tag of ownership.
+                  </Typography>
+                </motion.div>
+              </Grid>
+            </Grid>
+          </Container>
+        </motion.div>
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <Container className={classes.container_12}>
+            <motion.div variants={itemVariants}>
+              <Typography
+                variant="h3"
+                component="h2"
+                className={classes.heading12_about}
+              >
+                Who We Are
+              </Typography>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <Typography variant="body1" className={classes.infoText_about}>
+                Libati is dedicated to revolutionizing sports equipment access through our comprehensive
+                rental platform. We specialize in premium tennis and padel gear, offering everything from
+                professional rackets to complete equipment sets for players of all skill levels.
+              </Typography>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <Typography variant="body1" className={classes.infoText_about}>
+                Since our inception, we've built a community of over 25,000 satisfied customers who trust
+                us for their sporting needs. Our carefully curated inventory features top brands and the
+                latest innovations in tennis and padel equipment, all maintained to professional standards.
+              </Typography>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <Typography variant="body1" className={classes.infoText_about}>
+                At Libati, we believe sports should be accessible to everyone. Our rental model eliminates
+                the barrier of expensive equipment purchases while ensuring you always have access to the
+                latest and greatest gear. Join thousands of athletes who've made Libati their go-to sports partner.
+              </Typography>
+            </motion.div>
+          </Container>
+        </motion.div>
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <Container className={classes.container_12}>
+            <motion.div variants={itemVariants}>
+              <Typography
+                variant="h3"
+                component="h2"
+                className={classes.heading12_about}
+              >
+                Our Mission
+              </Typography>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <Typography variant="body1" className={classes.infoText_about}>
+                Libati is driven by the mission to make premium tennis and padel equipment accessible
+                to athletes worldwide through our innovative rental platform. We aim to break down
+                financial barriers while promoting sustainability in sports.
+              </Typography>
+            </motion.div>
+            <motion.div variants={itemVariants}>
+              <Typography variant="body1" className={classes.infoText_about}>
+                We're committed to providing exceptional service, maintaining equipment to the highest
+                standards, and continuously expanding our inventory to meet the evolving needs of our
+                community. Every rental supports our vision of inclusive, sustainable sports participation.
+              </Typography>
+            </motion.div>
+
+            <motion.div
+              variants={itemVariants}
+              className={classes.buttonContainer_about}
             >
-              <Button variant="contained" className={classes.button1_about}>
-                Our Products
-              </Button>
-            </Link>
-            <Link
-              to="/contact"
-              style={{ textDecoration: "none", color: "none" }}
-            >
-              <Button variant="contained" className={classes.button2_about}>
-                Contact Us
-              </Button>
-            </Link>
-          </div>
-        </Container>
+              <Link
+                to="/products"
+                style={{ textDecoration: "none" }}
+              >
+                <Button variant="contained" className={classes.button1_about}>
+                  Explore Equipment
+                </Button>
+              </Link>
+              <Link
+                to="/contact"
+                style={{ textDecoration: "none" }}
+              >
+                <Button variant="outlined" className={classes.button2_about}>
+                  Contact Us
+                </Button>
+              </Link>
+            </motion.div>
+          </Container>
+        </motion.div>
       </div>
     </>
   );

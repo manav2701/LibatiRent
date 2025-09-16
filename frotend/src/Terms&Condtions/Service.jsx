@@ -1,13 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
-import {
-  LocalShipping,
-  Security,
-  LocalOffer,
-  CreditCard,
-} from "@mui/icons-material";
-
 const useStyles = makeStyles((theme) => ({
   Services_section: {
     backgroundColor: "#000",
@@ -40,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
     "& svg": {
       fontSize: "3rem !important",
     },
-
   },
   Services_cardTitle: {
     color: "#fff",
@@ -54,55 +46,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const servicesData = [
-  {
-    id: 1,
-    icon: <LocalShipping fontSize="large" />,
-    title: "Express Delivery",
-    info: "Ships in 24 Hours",
-  },
-  {
-    id: 2,
-    icon: <Security fontSize="large" />,
-    title: "Brand Warranty",
-    info: "100% Original products",
-  },
-  {
-    id: 3,
-    icon: <LocalOffer fontSize="large" />,
-    title: "Exciting Deals",
-    info: "On all prepaid orders",
-  },
-  {
-    id: 4,
-    icon: <CreditCard fontSize="large" />,
-    title: "Secure Payments",
-    info: "SSL / Secure сertificate",
-  },
-];
-
 const Services = () => {
   const classes = useStyles();
 
-  return (
-    <>
-      <div  className={classes.Services_section}>
-        <div className={classes.Services_wrapper} style={{ width: "100%" }}>
-          {servicesData.map((item) => {
-            
-            return (
-              <div className={classes.Services_card} key={item.id}>
-                <div className={classes.Services_icon}>{item.icon}</div>
-                <div>
-                  <div className={classes.Services_cardTitle}>{item.title}</div>
-                  <div className={classes.Services_cardInfo}>{item.info}</div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </>
-  );
+  return null;
 };
+
 export default Services;

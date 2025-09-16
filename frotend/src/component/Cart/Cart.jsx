@@ -13,7 +13,7 @@ import { useHistory } from "react-router-dom";
 import CartItem from "./CartItem";
 import {
   dispalyMoney,
-  generateDiscountedPrice,
+  // generateDiscountedPrice, // Remove this import, not needed
 } from "../DisplayMoney/DisplayMoney";
 const Cart = () => {
   const history = useHistory();
@@ -32,7 +32,10 @@ const Cart = () => {
     if (stock <= quantity) {
       return;
     } else {
-      dispatch(addItemToCart(id, newQty));
+      // Always pass the full item object, not just rentalConfig
+      const item = cartItems.find((i) => i.productId === id);
+      // Pass all details to addItemToCart to preserve rentalConfig and pricing
+      dispatch(addItemToCart(id, newQty, item && item.rentalConfig, item && item.rentalPricing, item && item.price));
     }
   };
 
@@ -41,8 +44,8 @@ const Cart = () => {
     if (1 >= quantity) {
       return;
     }
-
-    dispatch(addItemToCart(id, newQty));
+    const item = cartItems.find((i) => i.productId === id);
+    dispatch(addItemToCart(id, newQty, item && item.rentalConfig, item && item.rentalPricing, item && item.price));
   };
 
   // new code
@@ -67,21 +70,41 @@ const Cart = () => {
   };
 
   // claculte price after discount
-  let totalPrice = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0
-  );
-  let discountedPrice = generateDiscountedPrice(totalPrice);
-  let totalDiscount = totalPrice - discountedPrice;
-  let final = totalPrice - totalDiscount;
-  final = dispalyMoney(final);
-  totalDiscount = dispalyMoney(totalDiscount);
+  // Calculate total using rentalPricing and rental duration (hours) for each item
+  let totalPrice = cartItems.reduce((acc, item) => {
+    // Rental config and pricing
+    const rental = item.rentalConfig || {};
+    let rentalHours = 1;
+    if (rental.pickupDate && rental.pickupTime && rental.returnDate && rental.returnTime) {
+      const pickup = new Date(`${rental.pickupDate}T${rental.pickupTime}:00+04:00`);
+      const returnTime = new Date(`${rental.returnDate}T${rental.returnTime}:00+04:00`);
+      const diffMs = returnTime - pickup;
+      rentalHours = Math.ceil(diffMs / (1000 * 60 * 60));
+      rentalHours = Math.max(1, rentalHours);
+    }
+    let rentalPrice = 0;
+    if (item.rentalPricing) {
+      if (rentalHours <= 1) {
+        rentalPrice = item.rentalPricing.firstHourPrice;
+      } else {
+        rentalPrice = item.rentalPricing.firstHourPrice +
+          (rentalHours - 1) * item.rentalPricing.subsequentHourPrice;
+      }
+    } else {
+      rentalPrice = item.price;
+    }
+    return acc + rentalPrice * item.quantity;
+  }, 0);
+
+  // Remove discount logic, just use totalPrice
+  let final = dispalyMoney(totalPrice);
+  let totalDiscount = 0;
   totalPrice = dispalyMoney(totalPrice);
 
   return (
     <>
       <div className="cartPage">
-  <MetaData title="Your Cart" />  
+        <MetaData title="Your Cart" />  
         <div className="cart_HeaderTop">
           <div className="headerLeft">
             <Typography variant="h5" component="h1" className="cartHeading">
@@ -154,13 +177,6 @@ const Cart = () => {
                       <span>Original Price</span>
                       {/* ORIGINAL PRICE TOATAL */}
                       <p>{totalPrice}</p>
-                    </div>
-
-                    <div className="discount order_Summary_Item">
-                      <span>Discount</span>
-                      <p>
-                        <del>{totalDiscount}</del>
-                      </p>
                     </div>
 
                     <div className="delivery order_Summary_Item">
@@ -248,3 +264,4 @@ const Cart = () => {
 };
 
 export default Cart;
+

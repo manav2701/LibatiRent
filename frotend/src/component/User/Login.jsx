@@ -1,4 +1,4 @@
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   TextField,
   FormControlLabel,
@@ -20,8 +20,7 @@ import { useAlert } from "react-alert";
 import { Link } from "react-router-dom";
 import MetaData from "../layouts/MataData/MataData"
 
-export default function Login() {
-
+const Login = () => {
     const history = useHistory();
     const loaction = useLocation();
 
@@ -77,7 +76,19 @@ export default function Login() {
        dispatch(login(email, password));
      }
 
-
+     // Handler for "Continue as Guest"
+     const handleGuestCheckout = (e) => {
+      // Prevent default form submission if inside a form
+      if (e && typeof e.preventDefault === "function") e.preventDefault();
+      // Remove any previous user session (optional, but recommended)
+      sessionStorage.removeItem("user");
+      sessionStorage.removeItem("token");
+      // Optionally clear Redux user state here if needed
+      localStorage.setItem("guestCheckout", "true");
+      setTimeout(() => {
+        window.location.href = "/shipping";
+      }, 50);
+    };
   return (
     <>
       <MetaData title={"Login"} />
@@ -146,8 +157,8 @@ export default function Login() {
               variant="body2"
               className={classes.termsAndConditionsText}
             >
-              I accept the Cricket Weapon Terms of Use and acknowledge Cricket
-              Weapon will use my information in accordance with its
+              I accept the Libati Terms of Use and acknowledge Libati
+              will use my information in accordance with its
               <Link to="/policy/privacy" className={classes.privacyText}>
                 Privacy Policy.
               </Link>
@@ -171,9 +182,19 @@ export default function Login() {
                 Create Account
               </Link>
             </Typography>
+            {/* Continue as Guest as underlined text at the bottom of the card */}
+            <button
+              className={classes.guestLink}
+              onClick={handleGuestCheckout}
+              type="button"
+            >
+              Continue as Guest
+            </button>
           </form>
         </div>
       )}
     </>
   );
-}
+};
+
+export default Login;

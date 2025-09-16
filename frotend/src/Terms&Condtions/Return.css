@@ -1,18 +1,29 @@
 .container__0 {
-  max-width: 900px;
-  margin: 5rem auto 0;
-  padding: 20px;
-  background-color: white;
+  max-width: 1200px;
+  margin: 6rem auto 2rem;
+  padding: 40px 30px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 0, 191, 0.1);
 }
 
 .image-container {
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .image-container img {
   width: 100%;
   height: auto;
+  transition: transform 0.3s ease;
+}
+
+.image-container:hover img {
+  transform: scale(1.02);
 }
 
 .policy-text {
@@ -20,56 +31,128 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 32px;
-  font-weight: bold;
+  font-size: 42px;
+  font-weight: 800;
   color: #ffffff;
   text-align: center;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  background: linear-gradient(135deg, rgba(255, 0, 191, 0.3), rgba(18, 10, 143, 0.3));
+  padding: 20px 30px;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
 }
 
 .content-container {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #333333;
-  width: 90%;
-  font-family: "Roboto", sans-serif;
+  font-size: 18px;
+  line-height: 1.8;
+  color: #2c2c2c;
+  width: 95%;
+  font-family: "Inter", "Roboto", sans-serif;
   display: block;
-margin: 0 auto;
-  gap: 1rem;
+  margin: 0 auto;
+  gap: 2rem;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
 }
 
 h1 {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #FF00BF;
+  text-align: center;
+  position: relative;
+}
+
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, #FF00BF, #120A8F);
+  border-radius: 2px;
 }
 
 h2 {
-  font-size: 20px;
-  font-weight: bold;
-  margin-top: 20px;
-  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  color: #120A8F;
+  position: relative;
+  padding-left: 20px;
+}
+
+h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 20px;
+  background: #FF00BF;
+  border-radius: 2px;
 }
 
 p {
-  margin-bottom: 10px;
+  margin-bottom: 16px;
+  color: #444;
 }
 
 .contact-info {
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  background: linear-gradient(135deg, #FF00BF, #120A8F);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
 }
 
 .email {
-  color: #007bff;
+  color: #ffffff;
   text-decoration: none;
   font-weight: 700;
+  transition: all 0.3s ease;
 }
 
 .email:hover {
-  text-decoration: underline;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  transform: scale(1.05);
 }
 
 .phone {
-  color: #333333;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .container__0 {
+    margin: 5rem auto 1rem;
+    padding: 25px 15px;
+  }
+  
+  .policy-text {
+    font-size: 28px;
+    padding: 15px 20px;
+  }
+  
+  .content-container {
+    font-size: 16px;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 28px;
+  }
+  
+  h2 {
+    font-size: 20px;
+  }
 }

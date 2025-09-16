@@ -11,7 +11,7 @@ import ReplayIcon from "@mui/icons-material/Replay";
 import EditIcon from "@mui/icons-material/Edit";
 import { useDispatch } from "react-redux";
 import {useAlert} from "react-alert";
-import { addItemToCart } from "../../actions/cartAction";
+import { addItemToCart } from "../../actions/cartAction"; // Fixed import - remove .js extension
 import {useHistory} from "react-router-dom";
 import DialogBox from "../Product/DialogBox";
 
@@ -146,20 +146,25 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   buyAgainButton: {
-    color: "#fff !important",
+    color: "white !important",
     cursor: "pointer",
-    padding: "0px 16px",
+    padding: "12px 24px !important",
     fontSize: "16px",
-    backgroundColor: "rgb(37, 37, 37) !important",
+    background: "linear-gradient(135deg, #FF00BF, #120A8F) !important",
     minHeight: "48px",
-    borderRadius: "8px",
+    borderRadius: "50px !important",
     border: "none",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    fontWeight: "600 !important",
+    transition: "all 0.3s ease !important",
+    boxShadow: "0 8px 25px rgba(255, 0, 191, 0.3) !important",
+    fontFamily: "'Poppins', sans-serif !important",
     "&:hover": {
-      backgroundColor: "#ed1c24 !important",
-      borderColor: "#ed1c24 !important",
+      background: "#120A8F !important",
+      transform: "translateY(-2px) !important",
+      boxShadow: "0 12px 35px rgba(18, 10, 143, 0.4) !important",
     },
     [theme.breakpoints.down("sm")]: {
       width: "100%",
@@ -167,21 +172,26 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   reviewButton: {
-    color: "#fff !important",
+    color: "#FF00BF !important",
     width: "50vmin",
     cursor: "pointer",
-    padding: "0px 4px",
+    padding: "10px 22px !important",
     fontSize: "16px",
-    backgroundColor: "rgb(37, 37, 37) !important",
+    background: "transparent !important",
+    border: "2px solid #FF00BF !important",
     minHeight: "48px",
-    borderRadius: "8px",
-    border: "none",
+    borderRadius: "50px !important",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    fontWeight: "600 !important",
+    transition: "all 0.3s ease !important",
+    fontFamily: "'Poppins', sans-serif !important",
     "&:hover": {
-      backgroundColor: "#ed1c24 !important",
-      borderColor: "#ed1c24 !important",
+      background: "#FF00BF !important",
+      color: "white !important",
+      transform: "translateY(-2px) !important",
+      boxShadow: "0 12px 35px rgba(255, 0, 191, 0.4) !important",
     },
     [theme.breakpoints.down("sm")]: {
       width: "100%",
@@ -277,7 +287,7 @@ const classes = useStyles();
   const addToCartHandler = (id , qty = 0) => {
     dispatch(addItemToCart(id , qty))
     alert.success("Item Added to Cart")
-    history.push("/cart")
+    history.push("/cart");
   }
 
    const handleClickOpen = () => {
@@ -330,7 +340,7 @@ const classes = useStyles();
                   Total:
                 </Typography>
                 <Typography variant="body2" color="141414">
-                  <strong> ₹</strong>
+                  <strong> AED</strong>
                   {product.price * product.quantity}
                 </Typography>
               </div>

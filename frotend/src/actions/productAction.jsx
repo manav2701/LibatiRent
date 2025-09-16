@@ -31,62 +31,74 @@ import {
 } from "../constants/productsConstatns";
 
 // get ALL Products
+// get ALL Products
 export const getProduct = (
   keyword = "",
   currentPage = 1,
   price = [0, 100000],
   category,
-  ratings = 0
+  ratings = 0,
+  specificFilters = {}
 ) => {
   return async (dispatch) => {
     try {
+      console.log("getProduct action called with:", { keyword, currentPage, price, category, ratings, specificFilters });
+      
       // initial state :
       dispatch({
         type: ALL_PRODUCT_REQUEST,
       });
 
-      let link = `/api/v1/product?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
+      let link = `/api/v1/product?keyword=${encodeURIComponent(keyword)}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}`;
 
       // when category selected by user then using another link
       if (category) {
-        link = `/api/v1/product?keyword=${keyword}&page=${currentPage}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}&category=${category}`;
+        link += `&category=${encodeURIComponent(category)}`;
       }
-      const { data } = await axios.get(link);
+
+      // Add specific filters for Tennis/Padel
+      Object.entries(specificFilters).forEach(([key, value]) => {
+        if (value) {
+          link += `&${key}=${encodeURIComponent(value)}`;
+        }
+      });
+      
+      console.log("API request URL:", link);
+      
+      const response = await axios.get(link);
+      const { data } = response;
+      
+      console.log("API response:", data);
 
       dispatch({
         type: ALL_PRODUCT_SUCCESS,
         payload: data,
       });
     } catch (error) {
+      console.error("Error in getProduct action:", error);
       dispatch({
         type: ALL_PRODUCT_FAIL,
-        payload: error.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
 };
 
 // Get Products Details
-export const getProductDetails = (id) => {
-  return async (dispatch) => {
-    try {
-      dispatch({
-        type: PRODUCT_DETAILS_REQUEST,
-      });
-
-      const { data } = await axios.get(`/api/v1/product/${id}`);
-
-      dispatch({
-        type: PRODUCT_DETAILS_SUCCESS,
-        payload: data.Product,
-      });
-    } catch (error) {
-      dispatch({
-        type: PRODUCT_DETAILS_FAIL,
-        payload: error.message,
-      });
-    }
-  };
+export const getProductDetails = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: PRODUCT_DETAILS_REQUEST });
+    const { data } = await axios.get(`/api/v1/product/${id}`);
+    dispatch({
+      type: PRODUCT_DETAILS_SUCCESS,
+      payload: data.product, // <-- Should be data.product
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_DETAILS_FAIL,
+      payload: error.response?.data?.message || error.message,
+    });
+  }
 };
 
 //Add new Review

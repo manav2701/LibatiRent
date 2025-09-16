@@ -1,7 +1,7 @@
 /* Cart Icon Styles */
 .cartIconWrapper {
   position: relative;
-  margin-bottom: 6px;
+  margin-bottom: 3px;
 }
 
 .cartIcon {
@@ -12,7 +12,7 @@
   position: relative;
 }
 .cartIcon > svg {
-  font-size: 1.7rem;
+  font-size: 4.7rem;
 }
 
 .cartIcon:hover {
@@ -20,12 +20,22 @@
 }
 .cartItemCount {
   position: absolute;
-  top: -2px;
-  right: -8px;
-  background-color: #ed1c24;
+  top: 0; 
+  right: -8px; /* move slightly outside so it doesn't overlap */
+  background: linear-gradient(135deg, #ef4444, #dc2626);
   color: #fff;
-  font-size: 12px;
-  line-height: 18px;
-  border-radius: 50%;
-  padding: 0 5px;
+  font-size: 0.75rem; /* scalable */
+  font-weight: 700;
+  min-width: 20px; /* ensure round look for 1 digit */
+  height: 20px;
+  padding: 0 6px; /* allow space for 2–3 digits */
+  border-radius: 999px; /* pill shape for larger numbers */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+  white-space: nowrap;
 }
+

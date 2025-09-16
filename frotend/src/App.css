@@ -1,34 +1,732 @@
-html,
-body,
+:root {
+  /* Updated Color Scheme - Darker Blues with Red Accents */
+  --primary-blue: #1e3a8a;
+  --secondary-blue: #3b82f6;
+  --accent-blue: #2563eb;
+  --accent-blue-hover: #1d4ed8;
+  --accent-red: #dc2626;
+  --accent-red-hover: #b91c1c;
+  --news-red: #f87171; /* Lighter red for better text visibility */
+  --news-red-hover: #ef4444;
+  
+  /* Glassmorphism Variables */
+  --glass-bg: rgba(30, 58, 138, 0.1);
+  --glass-border: rgba(59, 130, 246, 0.2);
+  --glass-blur: blur(20px);
+  
+  /* Updated Theme Variables */
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --border-color: rgba(59, 130, 246, 0.2);
+}
+
+/* Glassmorphism Utilities */
+.glass-effect {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+}
+
+.glass-search {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.glass-search:focus-within {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+html {
+  /* Ensure consistent scaling across zoom levels */
+  font-size: 16px; /* Base font size */
+  scroll-behavior: smooth;
+  /* Prevent horizontal scroll on zoom */
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  font-family: 'Inter', 'Poppins', sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+  margin: 0;
+  padding-top: 6rem; /* Height of fixed header */
+  padding-bottom: 3rem; /* Height of news ticker */
+  /* Remove any extra padding that causes space after footer */
+  overflow-y: auto;
+}
+
+/* Root container improvements */
 #root {
-  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  /* Ensure no extra margin/padding */
+  margin: 0;
+  padding: 0;
+}
+
+/* Fixed header that moves with content */
+.header,
+.MuiAppBar-root {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1100 !important;
+  background: rgba(15, 23, 42, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Header transparency on scroll */
+.header.at-top {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+/* Prevent horizontal overflow */
+.Home_Page,
+.content-wrapper,
+.all-equipment-section {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+  /* Remove any margins that create extra space */
+  margin: 0 auto;
+}
+
+/* Video background fixes */
+video {
+  object-fit: cover;
+  width: 100% !important;
+  height: 100% !important;
+  /* Prevent video from scaling with zoom */
+  transform: scale(1) !important;
+  transform-origin: center center !important;
+}
+
+/* Fixed positioning for all video-related elements */
+.heroSlider_Home,
+.heroContainer {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: -1 !important;
+  /* Prevent zoom scaling */
+  transform: scale(1) !important;
+  transform-origin: center center !important;
+}
+
+/* Ensure single scrollbar - only main body scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-blue);
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-blue-hover);
+}
+
+/* Hide all other scrollbars */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Hide scrollbars for webkit browsers on all elements except body */
+*:not(body)::-webkit-scrollbar {
+  display: none;
+}
+
+/* Only body and html should control scroll */
+body {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  /* ...existing code... */
+}
+
+html {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  /* ...existing code... */
+}
+
+/* News ticker specific fixes */
+.news-ticker-container {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1050 !important; /* Below header (1100) but above video (-1) */
+  height: 3rem !important;
+  background: var(--news-red) !important; /* Use lighter red */
+  overflow: hidden !important;
+}
+
+/* Ensure body padding accounts for news ticker */
+body {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  font-family: 'Inter', 'Poppins', sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+  margin: 0;
+  padding-top: 6rem; /* Height of fixed header */
+  padding-bottom: 3rem; /* Height of news ticker */
+  /* Ensure only one vertical scrollbar */
+  overflow-y: auto;
+}
+
+/* News ticker animation performance optimization */
+@media (prefers-reduced-motion: no-preference) {
+  .news-ticker-content {
+    animation: newsScroll 30s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .news-ticker-content {
+    animation: none;
+    transform: translateX(0);
+  }
+}
+
+@keyframes newsScroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* Mobile responsive adjustments for news ticker */
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 2.5rem;
+  }
+  
+  .news-ticker-container {
+    height: 2.5rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-bottom: 2rem;
+  }
+  
+  .news-ticker-container {
+    height: 2rem !important;
+  }
+}
+
+/* === BUTTONS === */
+.btn-primary {
+  background: var(--accent-blue) !important;
+  color: var(--text-primary) !important;
+  border-radius: 8px !important;
+  border: none !important;
+  transition: background 0.2s;
+}
+.btn-primary:hover {
+  background: var(--accent-blue-hover) !important;
+}
+.btn-primary:active {
+  background: var(--accent-red-hover) !important;
+}
+.btn-primary:disabled {
+  background: #374151 !important;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: transparent !important;
+  border: 2px solid var(--accent-blue) !important;
+  color: var(--accent-blue) !important;
+  border-radius: 8px !important;
+}
+.btn-secondary:hover {
+  background: var(--accent-blue-hover) !important;
+  color: var(--text-primary) !important;
+}
+
+/* === INPUTS & FORMS === */
+input,
+select,
+textarea {
+  background: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  border: 0.0625rem solid var(--border-color) !important;
+  border-radius: 0.5rem !important;
+  padding: clamp(0.5rem, 1.5vw, 0.75rem) !important;
+  font-size: clamp(0.875rem, 1.5vw, 1rem) !important;
+  min-height: 2.75rem; /* 44px minimum */
+  box-sizing: border-box;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--accent-blue) !important;
+  outline: none;
+}
+
+/* === CARDS & CONTAINERS === */
+.modern-card,
+.glass-card,
+.product-card-enhanced {
+  background: var(--bg-secondary) !important;
+  border: 0.0625rem solid var(--border-color) !important;
+  border-radius: 0.5rem !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  margin-bottom: 1rem;
+}
+
+.modern-card:hover,
+.product-card-enhanced:hover {
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+  transform: translateY(-4px);
+}
+
+/* Product Card specific styling */
+.MuiCard-root {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+.MuiCardContent-root {
+  background: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+}
+
+.MuiTypography-root {
+  color: inherit !important;
+}
+
+.MuiChip-root {
+  background: rgba(59, 130, 246, 0.1) !important;
+  color: var(--accent-blue) !important;
+  border: 1px solid rgba(59, 130, 246, 0.3) !important;
+}
+
+/* === HEADINGS & TYPOGRAPHY === */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary) !important;
+  /* Use clamp for better zoom behavior */
+  line-height: 1.2;
+  margin-bottom: 0.5em;
+}
+
+h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); }
+h3 { font-size: clamp(1.25rem, 3vw, 1.75rem); }
+h4 { font-size: clamp(1.125rem, 2.5vw, 1.5rem); }
+h5 { font-size: clamp(1rem, 2vw, 1.25rem); }
+h6 { font-size: clamp(0.875rem, 1.5vw, 1.125rem); }
+
+p, span, label {
+  color: var(--text-secondary);
+  font-size: clamp(0.875rem, 1.5vw, 1rem);
+  line-height: 1.6;
+}
+
+/* === LINKS === */
+a {
+  color: var(--accent-blue);
+  transition: color 0.2s;
+}
+a:hover {
+  color: var(--accent-red);
+}
+
+/* === BADGES & ACCENTS === */
+.discount-badge,
+.duration-badge,
+.cartBadge,
+.category-tab.active {
+  background: var(--accent-blue) !important;
+  color: var(--text-primary) !important;
+}
+.discount-badge {
+  border-radius: 4px;
+  font-weight: bold;
+}
+.instock {
+  background: rgba(59, 130, 246, 0.1) !important;
+  color: var(--accent-blue) !important;
+  border: 1px solid var(--accent-blue) !important;
+}
+.outofstock {
+  background: var(--accent-red) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--accent-red) !important;
+}
+
+/* === SIDEBAR & NAVIGATION === */
+.sidebar-container,
+.header,
+.footer {
+  background: transparent !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
+/* Header specific transparency */
+.header,
+.header *,
+.MuiAppBar-root {
+  background: transparent !important;
+  backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
+/* Ensure navbar items are visible on transparent background */
+.nav-item,
+.navButton {
+  text-shadow: 0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.5) !important;
+  font-size: clamp(0.875rem, 2vw, 1.125rem) !important;
+  padding: clamp(0.75rem, 2vw, 1rem) clamp(1rem, 2.5vw, 1.5rem) !important;
+  white-space: nowrap;
+}
+
+/* === FOOTER === */
+.footer,
+.sub_footer_root,
+.footer-bottom {
+  background: var(--bg-secondary) !important;
+  color: var(--text-secondary) !important;
+  border-top: 1px solid var(--accent-blue);
+}
+.footer-bottom {
+  text-align: center;
+  padding: 16px 0;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+}
+.footer-copyright {
+  display: none !important;
+}
+
+/* === FORM FILE UPLOAD === */
+input[type="file"] {
+  border: 2px dashed var(--accent-blue) !important;
+  background: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+}
+
+/* === STATUS COLORS === */
+.greenColor {
+  color: var(--accent-blue) !important;
+  font-weight: 600 !important;
+  background: rgba(59, 130, 246, 0.1);
+  padding: 6px 16px;
+  border-radius: 20px;
+  display: inline-block;
+  backdrop-filter: blur(10px);
+}
+.redColor {
+  color: var(--accent-red) !important;
+  font-weight: 600 !important;
+  background: rgba(239, 68, 68, 0.1);
+  padding: 6px 16px;
+  border-radius: 20px;
+  display: inline-block;
+  backdrop-filter: blur(10px);
+}
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-blue);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-blue-hover);
+  transform: scale(1.1);
+}
+
+/* === MODERN HOVER EFFECTS === */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px var(--accent-blue);
+}
+
+/* === GLASS CARD === */
+.glass-card {
+  background: rgba(59, 130, 246, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--accent-blue);
+  border-radius: 20px;
+}
+
+/* === MODERN CONTAINER === */
+.modern-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 2rem);
+  box-sizing: border-box;
   width: 100%;
 }
 
-body{
-  background-color: #f1f1f1;
-  margin: 0px;
-  padding: 0px;
-
-  font-family: 'Archivo', sans-serif;;
-}
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+/* === FOCUS STATES === */
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
 }
 
-/* Firefox */
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .modern-container {
+    padding: 0 15px;
+  }
+  .btn-primary,
+  .btn-secondary {
+    padding: 14px 24px !important;
+    font-size: 14px !important;
+  }
+}
 
-/* input[type="number"] {
+/* Prevent layout issues on extreme zoom levels */
+@media (max-width: 480px) {
+  .modern-container {
+    padding: 0 1rem;
+  }
   
-  -moz-appearance: textfield;
-} */
-
-.greenColor {
-  color: green !important; 
+  .btn-primary, .btn-secondary {
+    padding: 0.75rem 1rem !important;
+    font-size: 0.875rem !important;
+  }
+  
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
 }
-.redColor { 
-  color: red !important;
+
+/* High DPI display adjustments */
+@media (min-resolution: 2dppx) {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Ensure images scale properly */
+img {
+  max-width: 100%;
+  height: auto;
+  background-color: #222;
+}
+
+/* Flexbox improvements for zoom */
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(0.5rem, 2vw, 1rem);
+  align-items: center;
+}
+
+.flex-item {
+  flex: 1 1 auto;
+  min-width: 0; /* Prevent flex items from overflowing */
+}
+
+/* Zoom compatibility improvements - Enhanced */
+html {
+  font-size: 16px; /* Base font size */
+  scroll-behavior: smooth;
+  /* Prevent horizontal scroll on zoom */
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--bg-primary) !important;
+  color: var(--text-primary) !important;
+  font-family: 'Inter', 'Poppins', sans-serif;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  /* Prevent horizontal scrolling on zoom */
+  min-width: 320px; /* Minimum width */
+  /* Ensure proper scaling */
+  zoom: 1;
+  transform: scale(1);
+  transform-origin: 0 0;
+}
+
+/* Root container improvements */
+#root {
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Ensure sections stack properly */
+section {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Video specific fixes */
+video {
+  /* Ensure video always fits properly */
+  object-fit: cover;
+  width: 100% !important;
+  height: 100% !important;
+  /* Prevent video from causing horizontal scroll */
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+/* Container improvements for all zoom levels */
+.modern-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 3vw, 2rem);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Enhanced responsive typography */
+h1 { font-size: clamp(1.75rem, 4vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2.5rem); }
+h3 { font-size: clamp(1.25rem, 3vw, 2rem); }
+h4 { font-size: clamp(1.125rem, 2.5vw, 1.75rem); }
+h5 { font-size: clamp(1rem, 2vw, 1.5rem); }
+h6 { font-size: clamp(0.875rem, 1.5vw, 1.25rem); }
+
+/* Improved button scaling */
+.btn-primary, .btn-secondary {
+  padding: clamp(0.75rem, 2vw, 1rem) clamp(1rem, 3vw, 2rem) !important;
+  font-size: clamp(0.875rem, 1.5vw, 1rem) !important;
+  border-radius: 0.5rem !important;
+  transition: all 0.3s ease !important;
+  white-space: nowrap;
+  min-height: 44px; /* Minimum touch target */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Viewport units fix for zoom */
+.vh-100 {
+  height: 100vh;
+  min-height: 600px; /* Fallback */
+  max-height: 1200px; /* Prevent excessive height */
+}
+
+.vw-100 {
+  width: 100vw;
+  max-width: 100%;
+}
+
+/* Prevent layout shifts on zoom */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Responsive breakpoints for extreme zoom levels */
+@media (max-width: 320px) {
+  body {
+    font-size: 14px;
+  }
+  
+  .modern-container {
+    padding: 0 0.5rem;
+  }
+}
+
+@media (min-width: 2560px) {
+  .modern-container {
+    max-width: 1600px;
+  }
+}
+
+/* High DPI and zoom adjustments */
+@media (min-resolution: 1.5dppx) {
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Flexbox fixes for zoom */
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(0.5rem, 2vw, 1rem);
+  align-items: center;
+  width: 100%;
+}
+
+.flex-item {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* Grid fixes for zoom */
+.grid-container {
+  display: grid;
+  gap: clamp(0.5rem, 2vw, 1rem);
+  width: 100%;
+}
+
+/* Ensure images don't break layout */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
