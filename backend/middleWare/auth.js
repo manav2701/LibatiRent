@@ -18,34 +18,35 @@ exports.isAuthentictedUser = asyncWrapper(async (req, res, next) => {
     return next(new ErrorHandler("Please Login to access this resource", 401));
   }
 
-  // now verify that token with secret key
-  const deCodeToken = jwt.verify(token, process.env.JWT_SECRET);
+  try {
+    // now verify that token with secret key
+    const deCodeToken = jwt.verify(token, process.env.JWT_SECRET);
 
-  // now get user id from deCodeToken and store user in req object
-  const user = await userModel.findById(deCodeToken.id);
+    // now get user id from deCodeToken and store user in req object
+    const user = await userModel.findById(deCodeToken.id);
 
-  if (!user) {
-    return next(new ErrorHandler("User not found", 401));
+    if (!user) {
+      return next(new ErrorHandler("User not found", 401));
+    }
+
+    req.user = user;
+    next();
+  } catch (error) {
+    return next(new ErrorHandler("Invalid token", 401));
   }
-
-  req.user = user; // now we have user in req.user
-
-  next();
 });
 
-// taking role as param and converting it into array using spread operator
+// authorizing roles function =>
 exports.authorizeRoles = (...roles) => {
   return (req, res, next) => {
-    if (!req.user) {
-      return next(new ErrorHandler("User not authenticated", 401));
-    }
-    
-    if (roles.includes(req.user.role) === false) {
+    if (!roles.includes(req.user.role)) {
       return next(
-        new ErrorHandler(`Role: ${req.user.role} is not allowed to access this resource`, 403)
+        new ErrorHandler(
+          `Role: ${req.user.role} is not allowed to access this resource`,
+          403
+        )
       );
     }
-
     next();
-  }
-}
+  };
+};

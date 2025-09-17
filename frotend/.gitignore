@@ -3,17 +3,16 @@
 node_modules/
 .env
 .DS_Store
-build/
 /.pnp
 .pnp.js
 
 # testing
 /coverage
 
-
+# production
+/build
 
 # misc
-/vercel.json
 .DS_Store
 .env.local
 .env.development.local

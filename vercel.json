@@ -1,20 +1,49 @@
 {
-    "version": 2,
-    "builds": [
-        {
-            "src": "./backend/server.js",
-            "use": "@vercel/node"
-        },
-        {
-            "src": "./frotend/build", 
-            "use": "@vercel/static"
-        }
-    ],
-   
-    "rewrites": [
-        {
-            "source": "/(.*)",
-            "destination": "/backend/server.js"
-        }
-    ]
+  "version": 2,
+  "name": "libati-rent",
+  "builds": [
+    {
+      "src": "frotend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "build"
+      }
+    },
+    {
+      "src": "backend/server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/health",
+      "dest": "backend/server.js"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "backend/server.js"
+    },
+    {
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot|mp4|webm|ogg))",
+      "dest": "frotend/build/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "frotend/build/index.html"
+    }
+  ],
+  "functions": {
+    "backend/server.js": {
+      "maxDuration": 30
+    }
+  },
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    }
+  ]
 }

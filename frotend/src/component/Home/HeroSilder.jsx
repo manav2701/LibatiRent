@@ -290,6 +290,7 @@ export default function HeroSlider() {
         muted={true} // Keep muted always
         loop
         playsInline
+        preload="metadata" 
       >
         <source src={heroVideo} type="video/mp4" />
         Your browser does not support the video tag.
