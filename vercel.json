@@ -32,6 +32,8 @@
       "dest": "frotend/build/index.html"
     }
   ],
+  "installCommand": "cd frotend && npm install --legacy-peer-deps && cd ../backend && npm install",
+  "buildCommand": "cd frotend && CI=false npm run build",
   "env": {
     "NODE_ENV": "production"
   }
