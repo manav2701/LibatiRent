@@ -33,10 +33,6 @@ pids
 # Optional eslint cache
 .eslintcache
 
-# Package lock files
-package-lock.json
-yarn.lock
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
