@@ -1,8 +1,13 @@
 # Dependencies
 node_modules/
-frotend/node_modules/
-backend/node_modules/
-*/node_modules/
+/.pnp
+.pnp.js
+
+# Testing
+/coverage
+
+# Production
+/build
 
 # Environment files
 .env
@@ -10,20 +15,11 @@ backend/node_modules/
 .env.development.local
 .env.test.local
 .env.production.local
-backend/config/config.env
-frotend/.env
-
-# Build outputs
-frotend/build/
-dist/
-*.tgz
 
 # Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-lerna-debug.log*
-.pnpm-debug.log*
 
 # Runtime data
 pids
@@ -31,80 +27,25 @@ pids
 *.seed
 *.pid.lock
 
-# Coverage directory used by tools like istanbul
-coverage/
-*.lcov
-
-# nyc test coverage
-.nyc_output
-
-# node-waf configuration
-.lock-wscript
-
-# Compiled binary addons
-build/Release
-
-# Dependency directories
-jspm_packages/
-
-# TypeScript cache
-*.tsbuildinfo
-
 # Optional npm cache directory
 .npm
 
 # Optional eslint cache
 .eslintcache
 
-# Microbundle cache
-.rpt2_cache/
-.rts2_cache_cjs/
-.rts2_cache_es/
-.rts2_cache_umd/
-
-# Optional REPL history
-.node_repl_history
-
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
-# parcel-bundler cache
-.cache
-.parcel-cache
-
-# Next.js build output
-.next
-
-# Nuxt.js build / generate output
-.nuxt
-
-# Gatsby files
-.cache/
-public
-
-# Storybook build outputs
-.out
-.storybook-out
-
-# Temporary folders
-tmp/
-temp/
+# Package lock files
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
-# OS
+# OS generated files
 .DS_Store
 .DS_Store?
 ._*
@@ -113,9 +54,8 @@ temp/
 ehthumbs.db
 Thumbs.db
 
-# Vercel
+# Temporary folders
+tmp/
+temp/
+.npmrc
 .vercel
-
-# Package lock files (to avoid conflicts)
-package-lock.json
-yarn.lock
