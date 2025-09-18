@@ -50,6 +50,9 @@ const LazyUpdateUser = React.lazy(() => import("./component/Admin/UpdateUser"));
 const LazyNewProduct = React.lazy(() => import("./component/Admin/NewProduct"));
 const LazyProductReviews = React.lazy(() => import("./component/Admin/ProductReviews"));
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000';
+axios.defaults.baseURL = API_BASE_URL;
+
 function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
   const [isLoading, setIsLoading] = useState(true);
