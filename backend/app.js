@@ -16,8 +16,10 @@ if (process.env.NODE_ENV !== "production") {
 const corsOptions = {
   origin: process.env.NODE_ENV === "production" 
     ? [
-        "https://libati-rent-n9pp.vercel.app",
-        "https://your-custom-domain.com", // Add your custom domain if you have one
+        "https://libati.shop",           // your main frontend domain
+        "https://www.libati.shop",              // optional www
+        "https://libati-rent.vercel.app",       // vercel preview URL
+        "https://api.libati.shop",// Add your custom domain if you have one
       ]
     : ["http://localhost:3000"],
   credentials: true,
@@ -67,5 +69,6 @@ if (process.env.NODE_ENV === "production") {
 
 // Error middleware should be last
 app.use(errorMiddleware);
+
 
 module.exports = app;
